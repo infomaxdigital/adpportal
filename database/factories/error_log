@@ -1,0 +1,12 @@
+[26-Jun-2024 20:41:02 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Factories\Factory" not found in /home/nemizonc/adpportal.nemizon.com.au/database/factories/UserFactory.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/database/factories/UserFactory.php on line 12
+[26-Jun-2024 20:41:02 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Factories\Factory" not found in /home/nemizonc/adpportal.nemizon.com.au/database/factories/UserFactory.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/database/factories/UserFactory.php on line 12
+[26-Jun-2024 20:43:46 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Factories\Factory" not found in /home/nemizonc/adpportal.nemizon.com.au/database/factories/UserFactory.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/database/factories/UserFactory.php on line 12

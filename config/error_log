@@ -1,0 +1,160 @@
+[26-Jun-2024 20:36:30 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php on line 18
+[26-Jun-2024 20:36:30 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/services.php on line 18
+[26-Jun-2024 20:36:30 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/session.php on line 21
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/database.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/session.php on line 21
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/services.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/cache.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/services.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/services.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php on line 32
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php on line 18
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php on line 32
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/cache.php on line 18
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/app.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/app.php on line 19
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/nemizonc/adpportal.nemizon.com.au/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/view.php on line 17
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/app.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/app.php on line 19
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php on line 18
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/nemizonc/adpportal.nemizon.com.au/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/view.php on line 17
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php on line 32
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/database.php on line 18
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/nemizonc/adpportal.nemizon.com.au/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/view.php on line 17
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/mail.php on line 16
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/filesystems.php on line 16
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php on line 32
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php on line 16
+[26-Jun-2024 20:36:34 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php on line 16
+[26-Jun-2024 20:36:34 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/filesystems.php on line 16
+[26-Jun-2024 20:36:34 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/logging.php on line 21
+[26-Jun-2024 20:36:34 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php on line 16
+[26-Jun-2024 20:38:47 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/services.php on line 18
+[26-Jun-2024 20:38:48 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/broadcasting.php on line 18
+[26-Jun-2024 20:38:48 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/hashing.php on line 32
+[26-Jun-2024 20:38:55 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/nemizonc/adpportal.nemizon.com.au/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/view.php on line 17
+[26-Jun-2024 20:39:12 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/sanctum.php on line 18
+[26-Jun-2024 20:39:12 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/queue.php on line 16
+[26-Jun-2024 20:39:13 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/nemizonc/adpportal.nemizon.com.au/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/config/logging.php on line 21

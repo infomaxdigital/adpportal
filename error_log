@@ -1,0 +1,15 @@
+[26-Jun-2024 20:14:53 Australia/Sydney] PHP Warning:  require(/home/nemizonc/adpportal.nemizon.com.au/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/nemizonc/adpportal.nemizon.com.au/index.php on line 34
+[26-Jun-2024 20:14:53 Australia/Sydney] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nemizonc/adpportal.nemizon.com.au/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/nemizonc/adpportal.nemizon.com.au/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/index.php on line 34
+[26-Jun-2024 20:14:55 Australia/Sydney] PHP Warning:  require(/home/nemizonc/adpportal.nemizon.com.au/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/nemizonc/adpportal.nemizon.com.au/index.php on line 34
+[26-Jun-2024 20:14:55 Australia/Sydney] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nemizonc/adpportal.nemizon.com.au/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/nemizonc/adpportal.nemizon.com.au/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/index.php on line 34
+[26-Jun-2024 20:15:19 Australia/Sydney] PHP Warning:  require(/home/nemizonc/adpportal.nemizon.com.au/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/nemizonc/adpportal.nemizon.com.au/index.php on line 34
+[26-Jun-2024 20:15:19 Australia/Sydney] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nemizonc/adpportal.nemizon.com.au/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/nemizonc/adpportal.nemizon.com.au/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/index.php on line 34

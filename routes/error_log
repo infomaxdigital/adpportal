@@ -1,0 +1,64 @@
+[26-Jun-2024 20:36:30 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/console.php on line 17
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php on line 20
+[26-Jun-2024 20:36:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php on line 20
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php on line 17
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php on line 17
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php on line 17
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php on line 17
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php on line 16
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php on line 16
+[26-Jun-2024 20:36:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php on line 16
+[26-Jun-2024 20:36:42 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php on line 16
+[26-Jun-2024 20:36:43 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php on line 20
+[26-Jun-2024 20:36:43 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php on line 20
+[26-Jun-2024 20:38:48 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/api.php on line 17
+[26-Jun-2024 20:38:57 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/web.php on line 20
+[26-Jun-2024 20:39:00 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/routes/channels.php on line 16

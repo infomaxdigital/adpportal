@@ -1,0 +1,16 @@
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Testing\TestCase" not found in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php on line 7
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Testing\TestCase" not found in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php on line 7
+[26-Jun-2024 20:36:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Testing\TestCase" not found in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php on line 7
+[26-Jun-2024 20:38:52 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Testing\TestCase" not found in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/tests/TestCase.php on line 7
