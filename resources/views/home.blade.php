@@ -48,6 +48,7 @@
                         @can('View Masters')
                             <a class="btn btn-primary" href="{{ url('master-dance-style') }}">Dance Styles</a>
                             <a class="btn btn-primary" href="{{ url('master-dance-level') }}">Dance Levels</a>
+                            <a class="btn btn-primary" href="#">Discount</a>
                         @endcan
                     </div>
 
