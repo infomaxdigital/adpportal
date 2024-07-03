@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\masterdancelevel;
 use App\Models\masterdancestyle;
+use App\Models\masterdiscounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -177,6 +178,39 @@ class MastersController extends Controller
             return redirect()->back()->with('status', 'Status changed successfully');
         } else {
             return redirect()->back()->with('status', 'Status not changed');
+        }
+    }
+
+    public function discount(){
+        return view('masters.discount');
+    }
+    public function discountcreate(Request $request){
+        $request->validate([
+            'discountname' => 'required',
+            'discounttypes' => 'required',
+            'min_sessions' => 'required',
+            'max_sessions' => 'required',
+            'discount_amount' => 'required',
+        ]);
+        $input = $request->all();
+        $checkdiscount = masterdiscounts::where('discountName', $input['discountname'])->first();
+        if ($checkdiscount == '') {
+            $insertdiscount = new masterdiscounts();
+            $insertdiscount->discountName = $input['discountname'];
+            // $insertdiscount->discountType = $input['discounttypes'];
+            $insertdiscount->minSessions = $input['min_sessions'];
+            $insertdiscount->maxSessions = $input['max_sessions'];
+            $insertdiscount->discountAmount = $input['discount_amount'];
+            $insertdiscount->discountStatus = 1;
+            $insertdiscount->userId = Auth()->user()->id;
+            $insertdiscount->save();
+            if ($insertdiscount->save()) {
+                return redirect()->back()->with('status', 'Discount created successfully');
+            } else {
+                return redirect()->back()->with('status', 'Discount not created');
+            }
+        } else {
+            return redirect()->back()->with('status', 'Discount already exists');
         }
     }
 }

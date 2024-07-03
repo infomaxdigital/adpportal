@@ -76,5 +76,6 @@ Route::post('master-dancelevel-create', [MastersController::class, 'dancelevelcr
 Route::post('master-dancelevel-update', [MastersController::class, 'dancelevelupdate'])->name('master-dancelevel-update');
 Route::post('master-dancelevel-chnagestatus', [MastersController::class, 'dancelevelchangestatus'])->name('master-dancelevel-chnagestatus');
 
-
+Route::get('master-discount',[MastersController::class,'discount'])->name('master-discount');
+Route::post('master-discount-create',[MastersController::class,'discountcreate'])->name('master-discount-create');
 });
