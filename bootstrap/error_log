@@ -1,0 +1,12 @@
+[26-Jun-2024 23:03:57 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/nemizonc/adpportal.nemizon.com.au/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/bootstrap/app.php on line 14
+[26-Jun-2024 23:03:58 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/nemizonc/adpportal.nemizon.com.au/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/bootstrap/app.php on line 14
+[26-Jun-2024 23:04:05 Australia/Sydney] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/nemizonc/adpportal.nemizon.com.au/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/nemizonc/adpportal.nemizon.com.au/bootstrap/app.php on line 14

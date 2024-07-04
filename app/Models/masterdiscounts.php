@@ -11,7 +11,8 @@ class masterdiscounts extends Model
     protected $table = 'masterdiscounts';
     protected $primaryKey = 'discountId';
 
-    public function userId(){
-        return $this->hasOne(User::class,'id','user_id');
+   public function userid()
+    {
+        return $this->hasOne(User::class, 'id', 'userId');
     }
 }

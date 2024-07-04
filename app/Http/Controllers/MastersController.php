@@ -182,7 +182,8 @@ class MastersController extends Controller
     }
 
     public function discount(){
-        return view('masters.discount');
+        $discounts = masterdiscounts::with('userid')->get();
+        return view('masters.discount', compact('discounts'));
     }
     public function discountcreate(Request $request){
         $request->validate([
@@ -197,7 +198,7 @@ class MastersController extends Controller
         if ($checkdiscount == '') {
             $insertdiscount = new masterdiscounts();
             $insertdiscount->discountName = $input['discountname'];
-            // $insertdiscount->discountType = $input['discounttypes'];
+            $insertdiscount->discountType = $input['discounttypes'];
             $insertdiscount->minSessions = $input['min_sessions'];
             $insertdiscount->maxSessions = $input['max_sessions'];
             $insertdiscount->discountAmount = $input['discount_amount'];
@@ -213,4 +214,45 @@ class MastersController extends Controller
             return redirect()->back()->with('status', 'Discount already exists');
         }
     }
+    public function discountupdate(Request $request){
+    $request->validate([
+        'discountId' => 'required|exists:masterdiscounts,discountId',
+        'discountname' => 'required|unique:masterdiscounts,discountName,' . $request->discountId . ',discountId',
+        'discounttypes' => 'required',
+        'min_sessions' => 'required|integer|min:0',
+        'max_sessions' => 'required|integer|min:0',
+        'discount_amount' => 'required|numeric|min:0',
+    ]);
+
+    $input = $request->all();
+    $updatediscount = masterdiscounts::where('discountId', $input['discountId'])->first();
+
+    if ($updatediscount) {
+        $updatediscount->discountName = $input['discountname'];
+        $updatediscount->discountType = $input['discounttypes'];
+        $updatediscount->minSessions = $input['min_sessions'];
+        $updatediscount->maxSessions = $input['max_sessions'];
+        $updatediscount->discountAmount = $input['discount_amount'];
+        
+        // Check if discount name is unique after update
+        $isUnique = masterdiscounts::where('discountName', $input['discountname'])
+                                   ->where('discountId', '!=', $input['discountId'])
+                                   ->exists();
+        
+        if ($isUnique) {
+            // Redirect back to the modal with an error message
+            return redirect()->back()->withInput()->with('status', 'Discount name must be unique');
+        }
+        
+        if ($updatediscount->save()) {
+            return redirect()->back()->with('status', 'Discount Updated Successfully');
+        } else {
+            return redirect()->back()->with('status', 'Discount not Updated');
+        }
+    } else {
+        return redirect()->back()->with('status', 'Discount not found');
+    }
+}
+
+
 }
