@@ -4,6 +4,7 @@ use App\Http\Controllers\MastersController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EnquiryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,4 +80,14 @@ Route::post('master-dancelevel-chnagestatus', [MastersController::class, 'dancel
 Route::get('master-discount',[MastersController::class,'discount'])->name('master-discount');
 Route::post('master-discount-create',[MastersController::class,'discountcreate'])->name('master-discount-create');
 Route::post('master-discount-update',[MastersController::class,'discountupdate'])->name('master-discount-update');
+Route::post('master-discount-chnagestatus', [MastersController::class, 'discountchangestatus'])->name('master-discount-chnagestatus');
 });
+
+Route::get('master-membership',[MastersController::class,'membership'])->name('master-membership');
+Route::post('master-membership-create',[MastersController::class,'membershipcreate'])->name('master-membership-create');
+Route::post('master-membership-update',[MastersController::class,'membershipupdate'])->name('master-membership-update');
+Route::post('master-membership-chnagestatus', [MastersController::class, 'membershipchangestatus'])->name('master-membership-chnagestatus');
+
+
+//Enquiries urls
+Route::get('enquiries',[EnquiryController::class,'enquiries'])->name('enquiries');

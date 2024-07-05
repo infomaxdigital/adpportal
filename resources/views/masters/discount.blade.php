@@ -60,7 +60,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="discount_amount">Discount Amount</label>
-                                                    <input type="text" name="discount_amount" class="form-control"
+                                                    <input type="number" name="discount_amount" class="form-control"
                                                         value="" required>
                                                 </div>
                                             </div>
@@ -175,6 +175,47 @@
                                 </td>
                                 @endcan
                                 <!-- edit Discounts end -->
+                                 <!-- status Discounts start -->
+                                @can('Softdelete Masters')
+                                <td>
+                                <div class="modal fade" id="statusmodal{{$discount->discountId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Discount Status</h5>
+                                          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{route('master-discount-chnagestatus')}}" method="post">
+                                          @csrf
+                                          <div class="modal-body">
+                                            @if($discount->discountStatus == '1')
+                                            <p>{{$discount->discountName}} is in <span class=" ">Active</span> status</p>
+                                            <p>Do you realy want to <span class=" ">De-active</span> Discount </p>
+                                            <input type="hidden" name="status" value="0">
+                                            <input type="hidden" name="discountid" value="{{$discount->discountId}}">
+                                            @else
+                                            <p>{{$discount->discountName}} is in <span class=" ">De-active</span> status</p>
+                                            <p>Do you realy want to <span class=" ">Active</span> Discount </p>
+                                            <input type="hidden" name="status" value="1">
+                                            <input type="hidden" name="discountid" value="{{$discount->discountId}}">
+                                            @endif
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                                            <button class="btn btn-primary" type="submit">Yes</button>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                    @if ($discount->discountStatus == '1')
+                                    <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#statusmodal{{$discount->discountId}}">Active</a>
+                                    @else
+                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#statusmodal{{$discount->discountId}}">deactivate</a>
+                                    @endif
+                                </td>
+                                @endcan
+                                <!-- status Discounts end -->
                         </tr>
                         @endforeach
                     </tbody>

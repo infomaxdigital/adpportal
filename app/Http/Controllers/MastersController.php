@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\masterdancelevel;
 use App\Models\masterdancestyle;
 use App\Models\masterdiscounts;
+use App\Models\mastermemberships;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -215,44 +216,131 @@ class MastersController extends Controller
         }
     }
     public function discountupdate(Request $request){
-    $request->validate([
-        'discountId' => 'required|exists:masterdiscounts,discountId',
-        'discountname' => 'required|unique:masterdiscounts,discountName,' . $request->discountId . ',discountId',
-        'discounttypes' => 'required',
-        'min_sessions' => 'required|integer|min:0',
-        'max_sessions' => 'required|integer|min:0',
-        'discount_amount' => 'required|numeric|min:0',
-    ]);
+        $request->validate([
+            'discountId' => 'required|exists:masterdiscounts,discountId',
+            'discountname' => 'required|unique:masterdiscounts,discountName,' . $request->discountId . ',discountId',
+            'discounttypes' => 'required',
+            'min_sessions' => 'required|integer|min:0',
+            'max_sessions' => 'required|integer|min:0',
+            'discount_amount' => 'required|numeric|min:0',
+        ]);
 
-    $input = $request->all();
-    $updatediscount = masterdiscounts::where('discountId', $input['discountId'])->first();
+        $input = $request->all();
+        $updatediscount = masterdiscounts::where('discountId', $input['discountId'])->first();
 
-    if ($updatediscount) {
-        $updatediscount->discountName = $input['discountname'];
-        $updatediscount->discountType = $input['discounttypes'];
-        $updatediscount->minSessions = $input['min_sessions'];
-        $updatediscount->maxSessions = $input['max_sessions'];
-        $updatediscount->discountAmount = $input['discount_amount'];
-        
-        // Check if discount name is unique after update
-        $isUnique = masterdiscounts::where('discountName', $input['discountname'])
-                                   ->where('discountId', '!=', $input['discountId'])
-                                   ->exists();
-        
-        if ($isUnique) {
-            // Redirect back to the modal with an error message
-            return redirect()->back()->withInput()->with('status', 'Discount name must be unique');
-        }
-        
-        if ($updatediscount->save()) {
-            return redirect()->back()->with('status', 'Discount Updated Successfully');
+        if ($updatediscount) {
+            $updatediscount->discountName = $input['discountname'];
+            $updatediscount->discountType = $input['discounttypes'];
+            $updatediscount->minSessions = $input['min_sessions'];
+            $updatediscount->maxSessions = $input['max_sessions'];
+            $updatediscount->discountAmount = $input['discount_amount'];
+            
+            // Check if discount name is unique after update
+            $isUnique = masterdiscounts::where('discountName', $input['discountname'])
+                                       ->where('discountId', '!=', $input['discountId'])
+                                       ->exists();
+            
+            if ($isUnique) {
+                // Redirect back to the modal with an error message
+                return redirect()->back()->withInput()->with('status', 'Discount name must be unique');
+            }
+            
+            if ($updatediscount->save()) {
+                return redirect()->back()->with('status', 'Discount Updated Successfully');
+            } else {
+                return redirect()->back()->with('status', 'Discount not Updated');
+            }
         } else {
-            return redirect()->back()->with('status', 'Discount not Updated');
+            return redirect()->back()->with('status', 'Discount not found');
         }
-    } else {
-        return redirect()->back()->with('status', 'Discount not found');
     }
-}
 
+    public function discountchangestatus(Request $request){
+            $discountid = $request->input('discountid');
+            $status = $request->input('status');
+            $getdiscount = masterdiscounts::find($discountid);
+            $getdiscount->discountStatus = $status;
+            // var_dump($getdiscount); exit;
+            $getdiscount->save();
+
+            if ($getdiscount->save()) {
+                return redirect()->back()->with('status', 'Status changed successfully');
+            } else {
+                return redirect()->back()->with('status', 'Status not changed');
+            }
+    }
+
+    public function membership()
+    {   
+        $memberships = mastermemberships::with('userid')->get();
+        return view('masters.membership',compact('memberships'));
+    }
+
+    public function membershipcreate(Request $request){
+        $request->validate([
+            'membershipname' => 'required',
+            'membershipbenefits' => 'required',
+            'membershipdiscountamount' => 'required|numeric|min:0',
+        ]);
+        $input = $request->all();
+        $checkmembership = mastermemberships::where('membershipName', $input['membershipname'])->first();
+        if ($checkmembership == '') {
+            $insertmembership = new mastermemberships();
+            $insertmembership->membershipName = $input['membershipname'];
+            $insertmembership->benefits = $input['membershipbenefits'];
+            $insertmembership->membershipDiscountAmount = $input['membershipdiscountamount'];
+            $insertmembership->membershipStatus = 1;
+            $insertmembership->userId = Auth()->user()->id;
+            $insertmembership->save();
+            if ($insertmembership->save()) {
+                return redirect()->back()->with('status', 'Membership created successfully');
+            } else {
+                return redirect()->back()->with('status', 'Membership not created');
+            }
+        } else {
+            return redirect()->back()->with('status', 'Membership already exists');
+        }
+    }
+
+    public function membershipupdate(Request $request){
+        $request->validate([
+            'membershipId' => 'required|exists:mastermemberships,membershipId',
+            'membershipname' => 'required|unique:mastermemberships,membershipName,' . $request->membershipId . ',membershipId',
+            'membershipbenefits' => 'required',
+            'membershipdiscountamount' => 'required|numeric|min:0',
+        ]);
+
+        $input = $request->all();
+        $updatemembership = mastermemberships::where('membershipId', $input['membershipId'])->first();
+
+        if ($updatemembership) {
+            $updatemembership->membershipName = $input['membershipname'];
+            $updatemembership->benefits = $input['membershipbenefits'];
+            $updatemembership->membershipDiscountAmount = $input['membershipdiscountamount'];
+            
+            if ($updatemembership->save()) {
+                return redirect()->back()->with('status', 'Discount Updated Successfully');
+            } else {
+                return redirect()->back()->with('status', 'Discount not Updated');
+            }
+        } else {
+            return redirect()->back()->with('status', 'Discount not found');
+        }
+    }
+
+    public function membershipchangestatus(Request $request){
+        $membershipId = $request->input('membershipid');
+        $status = $request->input('status');
+        $getmembership = mastermemberships::find($membershipId);
+        $getmembership->membershipStatus = $status;
+        // var_dump($getmembership); exit;
+        $getmembership->save();
+
+        if ($getmembership->save()) {
+            return redirect()->back()->with('status', 'Status changed successfully');
+        } else {
+            return redirect()->back()->with('status', 'Status not changed');
+        }        
+    }
 
 }

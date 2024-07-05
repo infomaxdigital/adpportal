@@ -49,6 +49,7 @@
                             <a class="btn btn-primary" href="{{ url('master-dance-style') }}">Dance Styles</a>
                             <a class="btn btn-primary" href="{{ url('master-dance-level') }}">Dance Levels</a>
                             <a class="btn btn-primary" href="{{url('master-discount')}}">Discount</a>
+                            <a class="btn btn-primary" href="{{url('master-membership')}}">Membership</a>
                         @endcan
                     </div>
 
@@ -72,7 +73,7 @@
 
                     <div class="container m-3">
                         @can('View Masters')
-                            <a class="btn btn-primary" href="#">Enquiries</a>
+                            <a class="btn btn-primary" href="{{url('enquiries')}}">Enquiries</a>
                         @endcan
                     </div>
 
