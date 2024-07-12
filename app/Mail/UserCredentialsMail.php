@@ -5,13 +5,13 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class UserCredentialsMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $userName;
     public $userEmail;
     public $password;
@@ -21,11 +21,11 @@ class UserCredentialsMail extends Mailable
      */
     public function __construct($userName, $userEmail, $password)
     {
-        //
         $this->userName = $userName;
         $this->userEmail = $userEmail;
         $this->password = $password;
     }
+
     /**
      * Build the message.
      *
@@ -33,8 +33,12 @@ class UserCredentialsMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your Account Credentials')
-                    ->view('emails.user_credentials');
+        return $this->view('emails.user_credentials')
+                    ->with([
+                        'name' => $this->userName,
+                        'email' => $this->userEmail,
+                        'password' => $this->password,
+                    ]);
     }
 
     /**
@@ -44,16 +48,6 @@ class UserCredentialsMail extends Mailable
     {
         return new Envelope(
             subject: 'User Credentials Mail',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
         );
     }
 
