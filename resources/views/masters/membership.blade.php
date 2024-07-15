@@ -44,7 +44,7 @@
 													<textarea class="form-control" name="membershipbenefits" id="membershipbenefits" placeholder="Membership Benefits" required=""></textarea>
 												</div>                                                
                                                 <div class="form-group">
-                                                    <label for="discount_amount">Discount Amount</label>
+                                                    <label for="discount_amount">Discount Percentage</label>
                                                     <input type="number" name="membershipdiscountamount" class="form-control"
                                                         value="" required>
                                                 </div>
@@ -79,7 +79,7 @@
                         <tr>
                             <th>Membership Name</th>
                             <th>Benefits</th>
-                            <th>Discount Amount</th>
+                            <th>Discount Percentage</th>
                             <th>Added By</th>
                             <th>Action</th>
                             <th>Status</th>
@@ -120,7 +120,7 @@
 																		<textarea class="form-control" name="membershipbenefits" id="membershipbenefits" placeholder="Membership Benefits" required="">{{$membership->benefits}}</textarea>
 																	</div>
 																	<div class="form-group">
-																		<label for="discount_amount">Discount Amount</label>
+																		<label for="discount_amount">Discount Percentage</label>
 																		<input type="number" name="membershipdiscountamount" class="form-control"
 																		value="{{$membership->membershipDiscountAmount}}" required>
 																	</div>

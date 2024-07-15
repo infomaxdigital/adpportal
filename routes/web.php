@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\MastersController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -92,3 +93,7 @@ Route::post('master-membership-chnagestatus', [MastersController::class, 'member
 //Enquiries urls
 Route::get('enquiries',[EnquiryController::class,'enquiries'])->name('enquiries');
 Route::get('student-create', [EnquiryController::class, 'create'])->name('student-create');
+
+
+// Availabilities urls
+Route::get('classes',[ClassController::class,'classes'])->name('classes');

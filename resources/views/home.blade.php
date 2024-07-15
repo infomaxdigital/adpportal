@@ -72,9 +72,10 @@
                     @endif
 
                     <div class="container m-3">
-                        @can('View Masters')
+                        @can('View Enquiries')
                             <a class="btn btn-primary" href="{{url('enquiries')}}">Enquiries</a>
                         @endcan
+                        <a class="btn btn-primary" href="{{url('classes')}}">Manage Availability </a>
                     </div>
 
                 </div>

@@ -50,16 +50,16 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="min_sessions">Min Sessions</label>
-                                                    <input type="number" name="min_sessions" class="form-control" value=""
+                                                    <input type="number" name="min_sessions" class="form-control" value="" min="5"
                                                         required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="max_sessions">Max Sessions</label>
-                                                    <input type="number" name="max_sessions" class="form-control" value=""
+                                                    <input type="number" name="max_sessions" class="form-control" value="" min="5"
                                                         required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="discount_amount">Discount Amount</label>
+                                                    <label for="discount_amount">Discount Percentage</label>
                                                     <input type="number" name="discount_amount" class="form-control"
                                                         value="" required>
                                                 </div>
@@ -95,7 +95,7 @@
                             <th>Discount Name</th>
                             <th>Discount Type</th>
                             <th>Session-range</th>
-                            <th>Discount Amount</th>
+                            <th>Discount Percentage</th>
                             <th>Added By</th>
                             <th>Action</th>
                             <th>Status</th>
@@ -143,16 +143,16 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="min_sessions">Min Sessions</label>
-                                                                    <input type="number" name="min_sessions" class="form-control" value="{{$discount->minSessions}}"
+                                                                    <input type="number" name="min_sessions" class="form-control" value="{{$discount->minSessions}}" min="5"
                                                                     required>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="max_sessions">Max Sessions</label>
-                                                                    <input type="number" name="max_sessions" class="form-control" value="{{$discount->maxSessions}}"
+                                                                    <input type="number" name="max_sessions" class="form-control" value="{{$discount->maxSessions}}" min="5"
                                                                     required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="discount_amount">Discount Amount</label>
+                                                                    <label for="discount_amount">Discount Percentage</label>
                                                                     <input type="text" name="discount_amount" class="form-control"
                                                                     value="{{$discount->discountAmount}}" required>
                                                                 </div>

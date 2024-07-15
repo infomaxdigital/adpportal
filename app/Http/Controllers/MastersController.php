@@ -190,7 +190,7 @@ class MastersController extends Controller
         $request->validate([
             'discountname' => 'required',
             'discounttypes' => 'required',
-            'min_sessions' => 'required',
+            'min_sessions' => 'required|integer|min:5',
             'max_sessions' => 'required',
             'discount_amount' => 'required',
         ]);

@@ -67,9 +67,9 @@ class RoleController extends Controller
     }
 
     public function givePermissionToRole(Request $request , $roleid){
-        $request->validate([
-            'permission' => 'required'
-        ]);
+        // $request->validate([
+        //     'permission' => 'required'
+        // ]);
         $role = Role::find($roleid);
         $role->syncPermissions($request->permission);
 
