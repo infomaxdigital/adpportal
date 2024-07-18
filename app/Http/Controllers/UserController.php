@@ -71,7 +71,7 @@ class UserController extends Controller
             $user->syncRoles($request->roles);
         }
         // Send email to user with credentials
-        Mail::to($request->email)->send(new UserCredentialsMail($request->name, $request->email, $password));
+       // Mail::to($request->email)->send(new UserCredentialsMail($request->name, $request->email, $password));
         return redirect('/users')->with('status', 'User Created successfully');
     }
 

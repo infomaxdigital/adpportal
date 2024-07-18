@@ -97,3 +97,6 @@ Route::get('student-create', [EnquiryController::class, 'create'])->name('studen
 
 // Availabilities urls
 Route::get('classes',[ClassController::class,'classes'])->name('classes');
+Route::get('class-create',[ClassController::class,'create'])->name('class-create');
+Route::post('class-store',[ClassController::class,'store'])->name('class-store');
+Route::get('class-delete/{id}',[ClassController::class,'destroy'])->name('class-delete');
