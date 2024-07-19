@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\MastersController;
+use App\Http\Controllers\MydancestyleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -100,3 +101,8 @@ Route::get('classes',[ClassController::class,'classes'])->name('classes');
 Route::get('class-create',[ClassController::class,'create'])->name('class-create');
 Route::post('class-store',[ClassController::class,'store'])->name('class-store');
 Route::get('class-delete/{id}',[ClassController::class,'destroy'])->name('class-delete');
+
+// My dance style urls
+
+Route::get('my-dance-style',[MydancestyleController::class,'index'])->name('my-dance-style');
+Route::post('my-dance-style-store',[MydancestyleController::class,'store'])->name('my-dance-style-store');
