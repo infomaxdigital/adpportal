@@ -13,4 +13,8 @@ class MydanceStyle extends Model
     public function addedby(){
         return $this->hasOne(User::class,'id','added_by');
     }
+    public function teacherId(){
+        return $this->hasOne(User::class,'id','teacherId');
+    }
 }
+
