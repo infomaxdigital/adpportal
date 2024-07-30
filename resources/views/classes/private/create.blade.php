@@ -91,6 +91,7 @@
                                 @error('price')<span class="text-danger">{{$message}}</span> @enderror
                             </div>
                         </div>
+                        <input type="hidden" id="class_type" name="class_type" value="private">
                     </div>
                     <a href="{{url('classes')}}" class="btn btn-primary">Cancel</a>
                     <button class="btn btn-primary" type="submit">Submit</button>

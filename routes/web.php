@@ -106,3 +106,9 @@ Route::get('class-delete/{id}',[ClassController::class,'destroy'])->name('class-
 
 Route::get('my-dance-style',[MydancestyleController::class,'index'])->name('my-dance-style');
 Route::post('my-dance-style-store',[MydancestyleController::class,'store'])->name('my-dance-style-store');
+
+// Group class urls
+
+
+Route::get('group-classes',[ClassController::class,'groupclasses'])->name('group-classes');
+Route::get('group-class-create',[ClassController::class,'groupclasscreate'])->name('group-class-create');

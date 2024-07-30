@@ -76,6 +76,7 @@
                             <a class="btn btn-primary" href="{{url('enquiries')}}">Enquiries</a>
                         @endcan
                         <a class="btn btn-primary" href="{{url('classes')}}">Manage Availability</a>
+                        <a class="btn btn-primary" href="{{url('group-classes')}}">Manage Group Class</a>
                         <a class="btn btn-primary" href="{{url('my-dance-style')}}">My Dance Style</a>
                     </div>
 
