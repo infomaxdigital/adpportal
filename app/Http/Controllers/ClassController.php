@@ -13,15 +13,16 @@ class ClassController extends Controller
 {
    public function classes(Request $request)
    {
-
       $selecteddays = $request->input('selecteddays');
-
+      $query = ClassModel::with('teacher')
+         ->where('teacherId', Auth::id())
+         ->where('classType', 'private');
       if ($selecteddays) {
          // Filter classes based on the selected day
-         $classes = ClassModel::with('addedBy')->where('days', $selecteddays)->get();
+         $query->where('days', $selecteddays);
       } else {
          // Get all classes if no day is selected
-         $classes = ClassModel::with('addedBy')->get();
+         $classes = $query->get();
       }
       return view('classes.private.index', compact('classes', 'selecteddays'));
    }
@@ -46,6 +47,7 @@ class ClassController extends Controller
 
       $input = $request->all();
       //  $userId = Auth::user()->id;
+      $redirectRoute = '/classes'; // Default redirect route
 
       foreach ($input['days'] as $day) {
          $insertclass = new ClassModel;
@@ -61,6 +63,7 @@ class ClassController extends Controller
 
          if ($input['class_type'] == 'private') {
             $insertclass->studentName = $input['student_name'];
+            $redirectRoute = '/classes';
          }
 
          if ($input['class_type'] == 'group') {
@@ -73,6 +76,7 @@ class ClassController extends Controller
                }
                $insertclass->danceStyleLevel = json_encode($danceSelection); // Save as JSON
             }
+            $redirectRoute = '/group-classes';
          }
 
          if (!$insertclass->save()) {
@@ -80,7 +84,7 @@ class ClassController extends Controller
          }
       }
 
-      return redirect('/classes')->with('status', 'Classes Created successfully');
+      return redirect($redirectRoute)->with('status', 'Classes Created successfully');
    }
 
    public function destroy($classid)
@@ -95,24 +99,19 @@ class ClassController extends Controller
          ->where('teacherId', Auth::id())
          ->where('classType', 'group')
          ->get();
-
+      // Initialize $danceStyleLevels as an empty array
       $danceStyleLevels = [];
-
       foreach ($classes as $class) {
-         $danceStyleLevels[$class->id] = $class->danceStyleLevel;
-         // echo "<pre>";
-         // print_r($danceStyleLevels[$class->id]);
-         // echo "</pre>";
-         foreach ($danceStyleLevels[$class->id] as $danceStyle => $danceLevels) {
-            echo "<br>".$danceStyle . " - " ;
-            foreach($danceLevels as $danceLevel) {
-               echo $danceLevel;
-            }
-
-         }
+         //$danceStyleLevels[$class->id] = json_decode($class->danceStyleLevel;, true);
+         $danceStyleLevels[$class->id] = json_decode($class->danceStyleLevel, true);
       }
-      // exit;
-      return view('classes.group.index', compact('classes', 'danceStyleLevels'));
+      // Fetch all dance styles and store them in an associative array
+      $danceStyles = MasterDanceStyle::pluck('dancestyleName', 'dancestyleId')->all();
+      $danceLevels = masterdancelevel::pluck('dancelevelName', 'dancelevelId')->all();
+      //   echo "<pre>";
+      //   print_r($danceStyleLevels);
+      //   echo "<pre>";
+      return view('classes.group.index', compact('classes', 'danceStyleLevels', 'danceStyles', 'danceLevels'));
    }
    public function groupclasscreate()
    {

@@ -9,10 +9,7 @@ class ClassModel extends Model
 {
     use HasFactory;
     protected $table = 'classes';
-    protected $casts = [
-        'danceStyleLevel' => 'array',
-    ];
-
+   
     public function addedby(){
         return $this->hasOne(User::class,'id','added_by');
     }
