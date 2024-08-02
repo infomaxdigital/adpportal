@@ -46,22 +46,41 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="col-form-label pt-0" for="">Start Time(*)</label>
-                                <input class="form-control" type="time" id="start_time" name="start_time" value="{{ old('start_time', '09:00') }}"
-                                    required="">
+                                <input class="form-control" type="time" id="start_time" name="start_time"
+                                    value="{{ old('start_time', '09:00') }}" required="">
                                 @error('start_time')<span class="text-danger">{{$message}}</span> @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="col-form-label pt-0" for="">End Time(*)</label>
-                                <input class="form-control" type="time" id="end_time" name="end_time" value="{{ old('start_time', '09:45') }}"
-                                    required="">
+                                <input class="form-control" type="time" id="end_time" name="end_time"
+                                    value="{{ old('start_time', '09:45') }}" required="">
                                 @error('end_time')<span class="text-danger">{{$message}}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-sm-12">
+                                <label for="dance_level" class="form-label">Dance Level</label>
+                                <div class="form-check form-check-inline">
+                                    <select class="form-control" id="dance_level" name="dance_level">
+                                        @foreach ($dancelevels as $dancelevel)
+                                            <option value="{{ $dancelevel->dancelevelId }}">
+                                                {{ $dancelevel->dancelevelName }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-sm-12">
+                                <p>Dance Style</p>
                             </div>
                         </div>
                         @foreach ($dancestyles as $dancestyle)
                             <div class="row justify-content-center mb-3">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="dance_styles[]"
                                             value="{{ $dancestyle->dancestyleId }}"
@@ -70,21 +89,6 @@
                                             {{ $dancestyle->dancestyleName }}
                                         </label>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    @foreach ($dancelevels as $dancelevel)
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="dance_selection[{{ $dancestyle->dancestyleId }}][]"
-                                                value="{{ $dancelevel->dancelevelId }}"
-                                                id="dancelevel_{{ $dancestyle->dancestyleId }}_{{ $dancelevel->dancelevelId }}"
-                                                {{ isset($mydancestyles[$dancestyle->dancestyleId]) && in_array($dancelevel->dancelevelId, $mydancestyles[$dancestyle->dancestyleId]['danceLevel']) ? 'checked' : '' }}>
-                                            <label class="form-check-label"
-                                                for="dancelevel_{{ $dancestyle->dancestyleId }}_{{ $dancelevel->dancelevelId }}">
-                                                {{ $dancelevel->dancelevelName }}
-                                            </label>
-                                        </div>
-                                    @endforeach
                                 </div>
                             </div>
                         @endforeach

@@ -68,14 +68,20 @@ class ClassController extends Controller
 
          if ($input['class_type'] == 'group') {
             $insertclass->capactiy = $input['capacity'];
+            $insertclass->danceLevel = $input['dance_level'];
+            $insertclass->danceStyle = json_encode($input['dance_styles']);
+            // $insertmydance->danceLevel = json_encode($danceLevels);
             // Handle dance styles and levels
-            if (isset($input['dance_styles'])) {
-               $danceSelection = [];
-               foreach ($input['dance_styles'] as $dancestyleId) {
-                  $danceSelection[$dancestyleId] = $input['dance_selection'][$dancestyleId] ?? [];
-               }
-               $insertclass->danceStyleLevel = json_encode($danceSelection); // Save as JSON
-            }
+            // if (isset($input['dance_styles'])) {
+
+            // }
+            // if (isset($input['dance_styles'])) {
+            //    $danceSelection = [];
+            //    foreach ($input['dance_styles'] as $dancestyleId) {
+            //       $danceSelection[$dancestyleId] = $input['dance_selection'][$dancestyleId] ?? [];
+            //    }
+            //    $insertclass->danceStyleLevel = json_encode($danceSelection); // Save as JSON
+            // }
             $redirectRoute = '/group-classes';
          }
 
@@ -90,8 +96,16 @@ class ClassController extends Controller
    public function destroy($classid)
    {
       $class = ClassModel::find($classid);
+       // Retrieve the class type before deleting
+      $classType = $class->classType;
       $class->delete();
-      return redirect('/classes')->with('status', 'Classe Deleted successfully');
+      if ($classType == 'group') {
+         return redirect('/group-classes')->with('status', 'Class deleted successfully');
+     } elseif ($classType == 'private') {
+         return redirect('/classes')->with('status', 'Class deleted successfully');
+     } else {
+         return redirect('/classes')->with('status', 'Class deleted successfully');
+     }
    }
    public function groupclasses()
    {
@@ -100,18 +114,18 @@ class ClassController extends Controller
          ->where('classType', 'group')
          ->get();
       // Initialize $danceStyleLevels as an empty array
-      $danceStyleLevels = [];
-      foreach ($classes as $class) {
-         //$danceStyleLevels[$class->id] = json_decode($class->danceStyleLevel;, true);
-         $danceStyleLevels[$class->id] = json_decode($class->danceStyleLevel, true);
-      }
-      // Fetch all dance styles and store them in an associative array
-      $danceStyles = MasterDanceStyle::pluck('dancestyleName', 'dancestyleId')->all();
+
+      $danceStyles = masterdancestyle::pluck('dancestyleName', 'dancestyleId')->all();
       $danceLevels = masterdancelevel::pluck('dancelevelName', 'dancelevelId')->all();
+      foreach ($classes as $class) {
+         $selectedDanceStyles = json_decode($class['danceStyle'], true);
+         // Convert selected dance styles to comma-separated string
+         $class->selectedDanceStylesString = implode(', ', array_map(fn($styleId) => $danceStyles[$styleId] ?? 'Unknown', $selectedDanceStyles));
+      }
       //   echo "<pre>";
-      //   print_r($danceStyleLevels);
+      //   print_r($selectedDanceStyles);
       //   echo "<pre>";
-      return view('classes.group.index', compact('classes', 'danceStyleLevels', 'danceStyles', 'danceLevels'));
+      return view('classes.group.index', compact('classes', 'danceStyles', 'danceLevels', 'selectedDanceStyles'));
    }
    public function groupclasscreate()
    {

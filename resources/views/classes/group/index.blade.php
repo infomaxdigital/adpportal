@@ -24,20 +24,17 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     @foreach ($classes as $class)
-                        @foreach ($danceStyleLevels[$class->id] as $dancegStyle => $danvegLevels)
-                            @foreach ($danvegLevels as $danvegLevel)
-                                <tr>
-                                    <td>{{$danceLevels[$danvegLevel]}}<br>{{$danceStyles[$dancegStyle]}}</td>
-                                    <td>{{$class->days}}<br>{{$class->startTime}} - {{$class->endTime}}</td>
-                                    <td>Seat Capacity:<br>{{$class->capactiy}}</td>
-                                    <td>Booked Seat:<br></td>
-                                    <td>Available Seat:<br></td>
-                                    <td>
-                                        <a href="{{ url('class-delete', $class->id) }}" class="btn btn-danger">Delete</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endforeach
+                        <tr>
+                            <td>{{ $danceLevels[$class->danceLevel] }}<br>{{ $class->selectedDanceStylesString }}</td>
+                            <td>{{$class->days}}<br>{{$class->startTime}} - {{$class->endTime}}</td>
+                            <td>Seat Capacity:<br>{{$class->capactiy}}</td>
+                            <td>Booked Seat:<br></td>
+                            <td>Available Seat:<br></td>
+                            <td>
+                                <a href="{{ url('class-delete', $class->id) }}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+
                     @endforeach
                 </tbody>
             </table>
