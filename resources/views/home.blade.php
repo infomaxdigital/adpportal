@@ -75,9 +75,15 @@
                         @can('View Enquiries')
                             <a class="btn btn-primary" href="{{url('enquiries')}}">Enquiries</a>
                         @endcan
+                        @can('View Availability')
                         <a class="btn btn-primary" href="{{url('classes')}}">Manage Availability</a>
+                        @endcan
+                        @can('View Group Class')
                         <a class="btn btn-primary" href="{{url('group-classes')}}">Manage Group Class</a>
+                        @endcan
+                        @can('View MyDancestyle')
                         <a class="btn btn-primary" href="{{url('my-dance-style')}}">My Dance Style</a>
+                        @endcan
                     </div>
 
                 </div>

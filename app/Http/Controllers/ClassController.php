@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
 {
+   function __construct()
+    {
+         $this->middleware('permission:View Availability', ['only' => ['classes']]);
+         $this->middleware('permission:Create Availability', ['only' => ['create','store']]);
+         $this->middleware('permission:Delete Availability', ['only' => ['destroy']]);
+         $this->middleware('permission:View Group Class', ['only' => ['groupclasses']]);
+         $this->middleware('permission:Create Group Class', ['only' => ['groupclasscreate','store']]);
+         $this->middleware('permission:Delete Group Class', ['only' => ['destroy']]);
+         
+    }
    public function classes(Request $request)
    {
       $selecteddays = $request->input('selecteddays');

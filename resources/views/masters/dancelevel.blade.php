@@ -18,6 +18,7 @@
                 <h3>Master Dance Level</h3>
             </div>
             <!-- Create dance Level start -->
+            @can('Create Masters')
             <div class="col-sm-6">
                 <div class="modal fade" id="insertmodel" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -57,6 +58,7 @@
                         Level</button>
                 </div>
             </div>
+            @endcan
             <!-- Create dance Level end -->
         </div>
     </div>
@@ -82,6 +84,7 @@
                                 <td>{{$dancelevel->addedby->name}}</td>
                                 <td>{{ $dancelevel->lastupdatedby->name ?? 'N/A' }}</td>
                                 <!-- edit dance Level start -->
+                                @can('Edit Masters')
                                 <td>
                                     <div class="modal fade" id="danceleveledit{{$dancelevel->dancelevelId}}" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenter" aria-hidden="true">
@@ -121,8 +124,10 @@
                                     </div>
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#danceleveledit{{$dancelevel->dancelevelId}}">Edit</a>
                                 </td>
+                                @endcan
                                 <!-- edit dance level end -->
                                 <!-- status dance level start -->
+                                @can('Softdelete Masters')
                                 <td>
                                 <div class="modal fade" id="statusmodal{{$dancelevel->dancelevelId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -160,6 +165,7 @@
                                     <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#statusmodal{{$dancelevel->dancelevelId}}">deactivate</a>
                                     @endif
                                 </td>
+                                @endcan
                                 <!-- status dance level end -->
                             </tr>
                         @endforeach

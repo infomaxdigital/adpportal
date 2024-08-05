@@ -13,15 +13,13 @@
 <div class="container">
     <div class="page-header">
         <div class="row justify-content-center">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <h3>Add New Group Class</h3>
-            </div>
-            <div class="col-sm-6">
-
             </div>
         </div>
     </div>
 </div>
+@can('Create Group Class');
 <div class="container">
     <div class="page-body">
         <div class="row justify-content-center">
@@ -131,4 +129,5 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection

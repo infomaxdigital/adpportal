@@ -10,6 +10,7 @@
         </div>
     </div>
 </div>
+@can('View Availability')
 <div class="container">
     <div class="page-header">
         <div class="row justify-content-center">
@@ -45,11 +46,14 @@
                     <tbody>
                         @foreach ($classes as $class)
                             <tr>
+                                <td>{{$class->id}}</td>
                                 <td>{{$class->startTime}} to {{$class->endTime}}</td>
                                 <td>Not Booked</td>
+                                @can('Delete Availability')
                                 <td>
                                     <a href="{{ url('class-delete', $class->id) }}" class="btn btn-danger">Delete</a>
                                 </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>
@@ -58,4 +62,5 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection

@@ -10,6 +10,7 @@
         </div>
     </div>
 </div>
+@can('Create Availability')
 <div class="container">
     <div class="page-header">
         <div class="row justify-content-center">
@@ -100,4 +101,5 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection
