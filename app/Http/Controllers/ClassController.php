@@ -96,16 +96,16 @@ class ClassController extends Controller
    public function destroy($classid)
    {
       $class = ClassModel::find($classid);
-       // Retrieve the class type before deleting
+      // Retrieve the class type before deleting
       $classType = $class->classType;
       $class->delete();
       if ($classType == 'group') {
          return redirect('/group-classes')->with('status', 'Class deleted successfully');
-     } elseif ($classType == 'private') {
+      } elseif ($classType == 'private') {
          return redirect('/classes')->with('status', 'Class deleted successfully');
-     } else {
+      } else {
          return redirect('/classes')->with('status', 'Class deleted successfully');
-     }
+      }
    }
    public function groupclasses()
    {
@@ -114,7 +114,7 @@ class ClassController extends Controller
          ->where('classType', 'group')
          ->get();
       // Initialize $danceStyleLevels as an empty array
-
+      $selectedDanceStyles = [];
       $danceStyles = masterdancestyle::pluck('dancestyleName', 'dancestyleId')->all();
       $danceLevels = masterdancelevel::pluck('dancelevelName', 'dancelevelId')->all();
       foreach ($classes as $class) {
@@ -133,4 +133,15 @@ class ClassController extends Controller
       $dancelevels = masterdancelevel::all();
       return view('classes.group.create', compact('dancestyles', 'dancelevels'));
    }
+   public function groupclassview($id)
+   {
+      $class = ClassModel::findOrFail($id); // Replace ClassModel with your actual model name
+      //print_r($class); exit;
+      $danceStyles = masterdancestyle::pluck('dancestyleName', 'dancestyleId')->all();
+      $danceLevels = masterdancelevel::pluck('dancelevelName', 'dancelevelId')->all();
+      $selectedDanceStyles = json_decode($class['danceStyle'], true);
+      $class->selectedDanceStylesString = implode(', ', array_map(fn($styleId) => $danceStyles[$styleId] ?? 'Unknown', $selectedDanceStyles));
+      return view('classes.group.view', compact('class','danceLevels')); // 'class-view' is the view file that will display the class details
+   }
+
 }

@@ -31,6 +31,7 @@
                             <td>Booked Seat:<br></td>
                             <td>Available Seat:<br></td>
                             <td>
+                            <a href="{{ route('group-class-view', $class->id) }}" class="btn btn-info">View</a>
                                 <a href="{{ url('class-delete', $class->id) }}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>

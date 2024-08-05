@@ -112,3 +112,4 @@ Route::post('my-dance-style-store',[MydancestyleController::class,'store'])->nam
 
 Route::get('group-classes',[ClassController::class,'groupclasses'])->name('group-classes');
 Route::get('group-class-create',[ClassController::class,'groupclasscreate'])->name('group-class-create');
+Route::get('group-class-view/{id}', [ClassController::class, 'groupclassview'])->name('group-class-view');
