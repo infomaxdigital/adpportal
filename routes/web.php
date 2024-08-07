@@ -4,6 +4,7 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\MastersController;
 use App\Http\Controllers\MydancestyleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EnquiryController;
@@ -108,8 +109,11 @@ Route::get('my-dance-style',[MydancestyleController::class,'index'])->name('my-d
 Route::post('my-dance-style-store',[MydancestyleController::class,'store'])->name('my-dance-style-store');
 
 // Group class urls
-
-
 Route::get('group-classes',[ClassController::class,'groupclasses'])->name('group-classes');
 Route::get('group-class-create',[ClassController::class,'groupclasscreate'])->name('group-class-create');
 Route::get('group-class-view/{id}', [ClassController::class, 'groupclassview'])->name('group-class-view');
+
+// User Profile urls
+
+Route::get('profile',[ProfileController::class,'index'])->name('profile');
+Route::post('my-profile-store/{id}',[ProfileController::class,'store'])->name('my-profile-store');

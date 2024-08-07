@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\Auth;
 class ClassController extends Controller
 {
    function __construct()
-    {
-         $this->middleware('permission:View Availability', ['only' => ['classes']]);
-         $this->middleware('permission:Create Availability', ['only' => ['create','store']]);
-         $this->middleware('permission:Delete Availability', ['only' => ['destroy']]);
-         $this->middleware('permission:View Group Class', ['only' => ['groupclasses']]);
-         $this->middleware('permission:Create Group Class', ['only' => ['groupclasscreate','store']]);
-         $this->middleware('permission:Delete Group Class', ['only' => ['destroy']]);
-         
-    }
+   {
+      $this->middleware('permission:View Availability', ['only' => ['classes']]);
+      $this->middleware('permission:Create Availability', ['only' => ['create', 'store']]);
+      $this->middleware('permission:Delete Availability', ['only' => ['destroy']]);
+      $this->middleware('permission:View Group Class', ['only' => ['groupclasses']]);
+      $this->middleware('permission:Create Group Class', ['only' => ['groupclasscreate', 'store']]);
+      $this->middleware('permission:Delete Group Class', ['only' => ['destroy']]);
+
+   }
    public function classes(Request $request)
    {
       $selecteddays = $request->input('selecteddays');
@@ -29,7 +29,7 @@ class ClassController extends Controller
          ->where('classType', 'private');
       if ($selecteddays) {
          // Filter classes based on the selected day
-         $query->where('days', $selecteddays);
+         $classes = $query->where('days', $selecteddays)->get();
       } else {
          // Get all classes if no day is selected
          $classes = $query->get();
@@ -151,7 +151,7 @@ class ClassController extends Controller
       $danceLevels = masterdancelevel::pluck('dancelevelName', 'dancelevelId')->all();
       $selectedDanceStyles = json_decode($class['danceStyle'], true);
       $class->selectedDanceStylesString = implode(', ', array_map(fn($styleId) => $danceStyles[$styleId] ?? 'Unknown', $selectedDanceStyles));
-      return view('classes.group.view', compact('class','danceLevels')); // 'class-view' is the view file that will display the class details
+      return view('classes.group.view', compact('class', 'danceLevels')); // 'class-view' is the view file that will display the class details
    }
 
 }

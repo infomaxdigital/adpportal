@@ -40,6 +40,11 @@
                 </form>
             </div>
         </div>
+        <!-- <script>
+    document.getElementById('selecteddays').addEventListener('change', function() {
+        document.getElementById('daySelectionForm').submit();
+    });
+</script> -->
         <div class="row justify-content-center py-4">
             <div class="col-sm-12">
                 <table class="table table-bordered table-striped">

@@ -15,4 +15,8 @@ class mastermemberships extends Model
     {
         return $this->hasOne(User::class, 'id', 'userId');
     }
+    public function users()
+    {
+        return $this->hasMany(User::class, 'membershipId', 'membershipId');
+    }
 }
