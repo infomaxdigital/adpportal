@@ -143,11 +143,14 @@ $(function () {
             method: 'GET',
             success: function (response) {
                 $.each(response, function (index, classInfo) {
-                    var fields = ['teacherName', 'days', 'startTime', 'endTime'];
+                    var fields = ['teacherName', 'days', 'startTime', 'endTime','teacherId'];
                     fields.forEach(function (field) {
                         $('#' + field).val(classInfo[field]);
                         $('.' + field).html(classInfo[field]);
                     });
+                    if (classInfo.id) {
+                        $('#classId').val(classInfo.id);
+                    }
                     // Combine start time and end time and display them together
                     if (classInfo.startTime && classInfo.endTime) {
                         $('#timeSlot').html(classInfo.startTime + ' - ' + classInfo.endTime).show();
@@ -244,3 +247,115 @@ $(function () {
     });
     calculateFinalAmount();
 });
+
+//Payment form submission js
+
+document.addEventListener('DOMContentLoaded', async function () {
+    const stripe = Stripe('pk_test_51PqBU8H4Dau8eQBOxltl5rHiUv1joMfj6NFLX1fLtk15qvvsyga2ZH5P0qmjpZuqhyqmTZ9aL3GFZ18rjdC3V3kB00OBPleS7P'); // Replace with your Stripe publishable key
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    const form = document.getElementById('bookingForm');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Collect booking details
+        const classId = document.getElementById('classId').value;
+        const studentId = document.getElementById('studentId').value;
+        const studentName = document.getElementById('studentName').value;
+        const teacherId = document.getElementById('teacherId').value;
+        const teacherName = document.getElementById('teacherName').value;
+        const startDate = document.getElementById('startDate').value;
+        //const endDate = document.getElementById('endDate').value;
+        const startTime = document.getElementById('startTime').value;
+        const endTime = document.getElementById('endTime').value;
+        const days = document.getElementById('days').value;
+        const noOfStudent = document.querySelector('input[name="noofstudents"]:checked').value;
+        const frequency = document.querySelector('input[name="frequency"]:checked').value;
+        const noOfSession = document.getElementById('noofsessions').value;
+        const totalAmount = document.getElementById('totalAmountInput').value;
+        const totalDiscount = document.getElementById('totalDiscountInput').value;
+        const finalAmount = document.getElementById('finalAmountInput').value;
+
+
+        // Get the client secret from your server
+        const { clientSecret } = await fetch('/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                // Add any additional data you want to send to the server
+                classId : classId,
+                studentId : studentId,
+                studentName : studentName,
+                teacherId : teacherId,
+                teacherName : teacherName,
+                startDate : startDate,
+                endDate : '2024-08-31',
+                startTime : startTime,
+                endTime : endTime,
+                days : days,
+                noOfStudent : noOfStudent,
+                frequency : frequency,
+                noOfSession : noOfSession,
+                totalAmount : totalAmount,
+                totalDiscount : totalDiscount,
+                finalAmount : finalAmount,
+            })
+        }).then((r) => r.json());
+
+        // Confirm the card payment
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardElement,
+                billing_details: {
+                    name: 'studentName',
+                },
+            }
+        });
+
+        if (error) {
+            // Display the error to the user
+            document.getElementById('card-errors').textContent = error.message;
+        } else {
+            // The payment succeeded
+            if (paymentIntent.status === 'succeeded') {
+                // Store the booking data in the database along with the transaction ID
+                  await fetch('/store-booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    classId : classId,
+                    studentId : studentId,
+                    studentName : studentName,
+                    teacherId : teacherId,
+                    teacherName : teacherName,
+                    startDate : startDate,
+                    endDate : '2024-10-31',
+                    startTime : startTime,
+                    endTime : endTime,
+                    days : days,
+                    noOfStudent : noOfStudent,
+                    frequency : frequency,
+                    noOfSession : noOfSession,
+                    totalAmount : totalAmount,
+                    totalDiscount : totalDiscount,
+                    finalAmount : finalAmount,
+                    transactionId: paymentIntent.id // Transaction ID
+                })
+            });
+                window.location.href = '/payment-success';
+            } else {
+                window.location.href = '/payment-failure';
+            }
+        }
+    });
+});
+

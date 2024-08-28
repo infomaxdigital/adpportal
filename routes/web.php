@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -125,6 +126,16 @@ Route::get('book-private-class',[BookingController::class,'bookPrivateClass'])->
 Route::get('/get-classes/{teacherId}', [BookingController::class, 'getClassesByTeacher']);
 Route::get('/get-class-by-slot/{slotId}', [BookingController::class, 'getClassesBySlot']);
 
+
+// Route::post('payment',[PaymentController::class,'Payment'])->name('payment');
+// Route::get('success',[PaymentController::class,'success'])->name('success');
+// Route::get('cancel',[PaymentController::class,'cancel'])->name('cancel');
+
+
+Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
+Route::post('/store-booking', [PaymentController::class, 'storeBooking']);
+Route::get('/payment-success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment-failure', [PaymentController::class, 'paymentFailure'])->name('payment.failure');
 
 
 });

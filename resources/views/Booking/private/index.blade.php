@@ -21,7 +21,7 @@
     <h1>Book a Private Class</h1>
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <form action="#" method="GET" id="filterForm">
+            <form action="#" id="filterForm">
                 @csrf
                 <!-- Dance Style Dropdown -->
                 <div class="form-group">
@@ -82,6 +82,7 @@
     <div class="row justify-content-center">
         <div id="bookingFormContainer" class="mt-4 col-md-12" style="display:block;">
             <form id="bookingForm">
+                @csrf
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="row justify-content-center">
@@ -89,6 +90,7 @@
                                 <label for="teacherName" class="form-label">Teacher Name:</label>
                                 <div class="teacherName"></div>
                                 <input type="hidden" class="form-control" id="teacherName" value="">
+                                <input type="hidden" class="form-control" id="teacherId" value="">
                             </div>
                             <div class="col-md-4">
                                 <label for="days" class="form-label">Day</label>
@@ -100,6 +102,7 @@
                                 <div id="timeSlot"></div>
                                 <input type="hidden" class="form-control" id="startTime" value="">
                                 <input type="hidden" class="form-control" id="endTime" value="">
+                                <input type="hidden" name="classId" id="classId" value="">
                             </div>
                         </div>
                         <div class="row justify-content-center">
@@ -180,12 +183,22 @@
                                 <input type="hidden" name="final_amount" id="finalAmountInput" value="0.00">
                                 <input type="hidden" name="total_discount" id="totalDiscountInput" value="0.00">
                                 <input type="hidden" name="total_amount" id="totalAmountInput" value="0.00">
+                                <input type="hidden" name="studentName" id="studentName" value="{{$user->name}}">
+                                <input type="hidden" name="studentId" id="studentId" value="{{$user->id}}">
+                                <input type="hidden" class="form-control" id="endDate" value="">
                                 <script>
                                     var membershipDiscount = {{$membershipDiscountAmount}}
                                 </script>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit Booking</button>
+                        <!-- Stripe Card Element -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div id="card-element"></div>
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+                        </div>
+                        <button id="submit-button" type="submit" class="btn btn-primary">Submit Booking</button>
                     </div>
                 </div>
             </form>
@@ -193,4 +206,6 @@
     </div>
 </div>
 </div>
+
+<script src="https://js.stripe.com/v3/"></script>
 @endsection

@@ -80,7 +80,9 @@ class BookingController extends Controller
             }
         }
 
-        return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDays', 'groupedData', 'danceLevelNames','allDiscount','membershipDiscountAmount'));
+        $stripePublishableKey = config('stripe.stripe_pk');
+        //echo $stripePublishableKey; exit;
+        return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDays', 'groupedData', 'danceLevelNames','allDiscount','membershipDiscountAmount','stripePublishableKey'));
     }
     public function getClassesByTeacher($teacherId)
     {
