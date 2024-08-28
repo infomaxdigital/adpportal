@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\MastersController;
 use App\Http\Controllers\MydancestyleController;
@@ -84,7 +85,7 @@ Route::get('master-discount',[MastersController::class,'discount'])->name('maste
 Route::post('master-discount-create',[MastersController::class,'discountcreate'])->name('master-discount-create');
 Route::post('master-discount-update',[MastersController::class,'discountupdate'])->name('master-discount-update');
 Route::post('master-discount-chnagestatus', [MastersController::class, 'discountchangestatus'])->name('master-discount-chnagestatus');
-});
+
 
 Route::get('master-membership',[MastersController::class,'membership'])->name('master-membership');
 Route::post('master-membership-create',[MastersController::class,'membershipcreate'])->name('master-membership-create');
@@ -117,3 +118,13 @@ Route::get('group-class-view/{id}', [ClassController::class, 'groupclassview'])-
 
 Route::get('profile',[ProfileController::class,'index'])->name('profile');
 Route::post('my-profile-store/{id}',[ProfileController::class,'store'])->name('my-profile-store');
+
+
+// Booking Urls
+Route::get('book-private-class',[BookingController::class,'bookPrivateClass'])->name('book-private-class');
+Route::get('/get-classes/{teacherId}', [BookingController::class, 'getClassesByTeacher']);
+Route::get('/get-class-by-slot/{slotId}', [BookingController::class, 'getClassesBySlot']);
+
+
+
+});

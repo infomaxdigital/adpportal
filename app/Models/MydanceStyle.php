@@ -9,6 +9,7 @@ class MydanceStyle extends Model
 {
     use HasFactory;
     protected $table = 'mydancestyle';
+    
 
     public function addedby(){
         return $this->hasOne(User::class,'id','added_by');

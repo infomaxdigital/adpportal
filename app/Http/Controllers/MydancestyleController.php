@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class MydancestyleController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:View MyDancestyle', ['only' => ['index','store']]);
+    }
     public function index()
     {
         $dancestyles = masterdancestyle::all();

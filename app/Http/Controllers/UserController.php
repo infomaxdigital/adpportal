@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 use App\Mail\UserCredentialsMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -71,7 +72,9 @@ class UserController extends Controller
             $user->syncRoles($request->roles);
         }
         // Send email to user with credentials
-       //Mail::to($request->email)->send(new UserCredentialsMail($request->name, $request->email, $password));
+        //Mail::to($request->email)->send(new UserCredentialsMail($request->name, $request->email, $password));
+        // Log the password
+        Log::info('Generated password for user ' . $user->email . ': ' . $password);
         return redirect('/users')->with('status', 'User Created successfully');
     }
 

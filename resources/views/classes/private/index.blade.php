@@ -26,7 +26,7 @@
                 <form id="daySelectionForm" method="GET" action="{{ url('classes') }}">
                     <div class="form-group">
                         <select class="form-control" id="selecteddays" name="selecteddays">
-                        <option value="">All Days</option>
+                            <option value="">All Days</option>
                             <option value="Monday" {{('Monday' == $selecteddays) ? 'selected':''}}>Monday</option>
                             <option value="Tuesday" {{('Tuesday' == $selecteddays) ? 'selected':''}}>Tuesday</option>
                             <option value="Wednesday" {{('Wednesday' == $selecteddays) ? 'selected':''}}>Wednesday</option>
