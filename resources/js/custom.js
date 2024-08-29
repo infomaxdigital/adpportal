@@ -248,6 +248,48 @@ $(function () {
     calculateFinalAmount();
 });
 
+// End Date Calculation
+
+$(function () {
+    function calculateEndDate() {
+        let numberofSessions = parseInt($('#noofsessions').val()) || 0;
+        let frequency = $('input[name="frequency"]:checked').val();
+        let startDate = $('#startDate').val();
+        console.log(numberofSessions + ' ' + frequency + ' ' + startDate);
+        
+        // Add your logic here to calculate the end date based on the number of sessions and frequency
+        if (startDate && numberofSessions > 0 && frequency) { 
+            let start = new Date(startDate);
+            let endDate;
+             switch (frequency) {
+                case 'weekly':
+                    endDate = new Date(start.setDate(start.getDate() + (7 * (numberofSessions - 1))));
+                    break;
+                case 'fortnightly':
+                    endDate = new Date(start.setDate(start.getDate() + (14 * (numberofSessions - 1))));
+                    break;
+                default:
+                    return;
+            }
+
+            // Format the end date as YYYY-MM-DD
+            let formattedEndDate = endDate.toISOString().split('T')[0];
+
+            // Display the formatted end date
+            $('#endDate').val(formattedEndDate);
+        }
+    }
+
+    // Trigger calculation when the number of sessions changes or when any frequency option is changed
+    $('#noofsessions, input[name="frequency"], #startDate').on('input change', function () {
+        calculateEndDate();
+    });
+
+    // Initial calculation on page load
+    calculateEndDate();
+});
+
+
 //Payment form submission js
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -265,20 +307,24 @@ document.addEventListener('DOMContentLoaded', async function () {
         const classId = document.getElementById('classId').value;
         const studentId = document.getElementById('studentId').value;
         const studentName = document.getElementById('studentName').value;
+        const studentEmail = document.getElementById('studentEmail').value;
+        const studentPhone = document.getElementById('studentPhone').value;
         const teacherId = document.getElementById('teacherId').value;
         const teacherName = document.getElementById('teacherName').value;
         const startDate = document.getElementById('startDate').value;
-        //const endDate = document.getElementById('endDate').value;
+        const endDate = document.getElementById('endDate').value;
         const startTime = document.getElementById('startTime').value;
         const endTime = document.getElementById('endTime').value;
         const days = document.getElementById('days').value;
         const noOfStudent = document.querySelector('input[name="noofstudents"]:checked').value;
+        const partnername = document.getElementById('partnername').value;
         const frequency = document.querySelector('input[name="frequency"]:checked').value;
         const noOfSession = document.getElementById('noofsessions').value;
         const totalAmount = document.getElementById('totalAmountInput').value;
         const totalDiscount = document.getElementById('totalDiscountInput').value;
         const finalAmount = document.getElementById('finalAmountInput').value;
-
+        // const endDate = calculateEndDate(startDate, frequency, noOfSession);
+        // document.getElementById('endDate').value = endDate;
 
         // Get the client secret from your server
         const { clientSecret } = await fetch('/create-payment-intent', {
@@ -292,14 +338,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                 classId : classId,
                 studentId : studentId,
                 studentName : studentName,
+                studentEmail : studentEmail,
+                studentPhone: studentPhone,
                 teacherId : teacherId,
                 teacherName : teacherName,
                 startDate : startDate,
-                endDate : '2024-08-31',
+                endDate : endDate,
                 startTime : startTime,
                 endTime : endTime,
                 days : days,
                 noOfStudent : noOfStudent,
+                partnername : partnername,
                 frequency : frequency,
                 noOfSession : noOfSession,
                 totalAmount : totalAmount,
@@ -313,7 +362,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             payment_method: {
                 card: cardElement,
                 billing_details: {
-                    name: 'studentName',
+                    name: studentName,
+                    email: studentEmail,
+                    phone: studentPhone,
                 },
             }
         });
@@ -335,14 +386,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                     classId : classId,
                     studentId : studentId,
                     studentName : studentName,
+                    studentEmail : studentEmail,
+                    studentPhone: studentPhone,
                     teacherId : teacherId,
                     teacherName : teacherName,
                     startDate : startDate,
-                    endDate : '2024-10-31',
+                    endDate : endDate,
                     startTime : startTime,
                     endTime : endTime,
                     days : days,
                     noOfStudent : noOfStudent,
+                    partnername: partnername,
                     frequency : frequency,
                     noOfSession : noOfSession,
                     totalAmount : totalAmount,
@@ -358,4 +412,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 });
+
+
 

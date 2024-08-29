@@ -184,6 +184,8 @@
                                 <input type="hidden" name="total_discount" id="totalDiscountInput" value="0.00">
                                 <input type="hidden" name="total_amount" id="totalAmountInput" value="0.00">
                                 <input type="hidden" name="studentName" id="studentName" value="{{$user->name}}">
+                                <input type="hidden" name="studentEmail" id="studentEmail" value="{{$user->email}}">
+                                <input type="hidden" name="studentPhone" id="studentPhone" value="{{$user->contact}}">
                                 <input type="hidden" name="studentId" id="studentId" value="{{$user->id}}">
                                 <input type="hidden" class="form-control" id="endDate" value="">
                                 <script>
@@ -206,6 +208,5 @@
     </div>
 </div>
 </div>
-
 <script src="https://js.stripe.com/v3/"></script>
 @endsection

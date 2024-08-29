@@ -7,68 +7,6 @@ use App\Models\BookingModel;
 
 class PaymentController extends Controller
 {
-    //
-    // public function Payment(Request $request){
-    //     $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
-    //     $response = $stripe->checkout->sessions->create([
-    //             'line_items' => [
-    //                 [
-    //                     'price_data' => [
-    //                         'currency' => 'aud',
-    //                         'product_data' => [
-    //                             'name' => 'test',
-    //                         ],
-    //                         'unit_amount' => 50,
-    //                     ],
-    //                     'quantity' => 1,
-    //                 ],
-    //             ],
-
-    //             'mode' => 'payment',
-    //             'success_url' => route('success').'?session_id={CHECKOUT_SESSION_ID}',
-    //             'cancel_url' => route('cancel'),
-    //         ]);
-    //         //dd($response);
-    //         if(isset($response->id) && $response->id != ''){
-    //             session()->put('product_name', 'test');
-    //             session()->put('quantity', 1);
-    //             session()->put('price', 50);
-    //             return redirect($response->url);
-    //         }
-    //         else{
-    //             return redirect()->route('cancel');
-    //         }
-    // }
-    
-    // public function success(Request $request) {
-    //     if(isset($request->session_id)) {
-    //         $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
-    //         $response = $stripe->checkout->sessions->retrieve($request->session_id);
-    //         // dd($response);
-    //         // $payment = new Payment();
-    //         // $payment->payment_id = $response->id;
-    //         // $payment->product_name = session()->get('product_name');
-    //         // $payment->quantity = session()->get('quantity');
-    //         // $payment->amount = session()->get('price');
-    //         // $payment->currency = $response->currency;
-    //         // $payment->customer_name = $response->customer_details->name;
-    //         // $payment->customer_email = $response->customer_details->email;
-    //         // $payment->payment_status = $response->status;
-    //         // $payment->payment_method = "stripe";
-    //         // $payment->save();
-    //         return("Payment Successfull");
-
-    //     }
-    //     else {
-    //         return redirect()->route('cancel');
-    //     }
-    // }
-
-    // public function cancel(Request $request) {
-    //     return 'Payment is cancelled';
-    // }
-
-
     public function createPaymentIntent(Request $request)
     {
         $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
@@ -103,6 +41,7 @@ class PaymentController extends Controller
         $booking->endTime = $request->endTime;
         $booking->day = $request->days;
         $booking->noOfStudent = $request->noOfStudent;
+        $booking->partnerName = $request->partnername;
         $booking->frequency = $request->frequency;
         $booking->noOfSession = $request->noOfSession;
         $booking->totalAmount = $request->totalAmount;
