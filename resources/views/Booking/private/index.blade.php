@@ -231,6 +231,7 @@
                                     <div id="card-errors" role="alert"></div>
                                 </div>
                             </div>
+                            <a href="#" class="btn btn-primary backbtn2" >Back</a>
                             <button id="submit-button" type="submit" class="btn btn-primary">Submit Booking</button>
                         </div>
                     </div>

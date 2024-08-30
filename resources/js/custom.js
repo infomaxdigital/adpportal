@@ -101,7 +101,7 @@ $(function () {
             return $(this).text();
         }).get().join('<br>');
 
-        $('#data1').html('<strong>Teacher Name:</strong> ' + teacherName + '<br><strong>Days:</strong> ' + days + '<br><strong>Styles:</strong><br>' + styles);
+        $('#data1').html('<strong>Teacher Name:</strong> ' + teacherName + '<br><strong>Days:</strong> ' + days + '<br><strong>Styles:</strong><br>' + styles + '<div><a href="#" class="btn btn-primary backbtn1" >Back</a></div>');
 
         // Fetch class data using AJAX
         $.ajax({
@@ -143,9 +143,9 @@ $(function () {
     $(document).on('click', '.book-now', function (e) {
         e.preventDefault();
 
-         // Hide Step 1
+         // Hide Step 2
         document.getElementById('step2').style.display = 'none';
-        // Show Step 2
+        // Show Step 3
         document.getElementById('step3').style.display = 'block';
         setActiveStep(3);
         var slotId = $(this).data('class-id');
@@ -336,9 +336,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-         // Hide Step 1
+         // Hide Step 3
         document.getElementById('step3').style.display = 'none';
-        // Show Step 2
+        // Show Step 4
         document.getElementById('step4').style.display = 'block';
         setActiveStep(4);
         const scheduledates = calculateEndDate();
@@ -480,12 +480,23 @@ function setActiveStep(step) {
     // Add the active class to the current step
     document.getElementById('step-' + step).classList.add('active');
 }
-
-// Call setActiveStep with the corresponding step number when moving to the next step
-// Example for step 1
 setActiveStep(1);
 
-// Example when you move to step 2
-// setActiveStep(2);
-// And so on for other steps
 
+$(document).on('click', '.backbtn1', function(e){
+    e.preventDefault();
+    // Show Step 1
+    document.getElementById('step1').style.display = 'block';
+    // Hide Step 2
+    document.getElementById('step2').style.display = 'none';
+    setActiveStep(1);
+});
+
+$(document).on('click', '.backbtn2', function(e){
+    e.preventDefault();
+    // Show Step 2
+    document.getElementById('step2').style.display = 'block';
+    // Hide Step 3
+    document.getElementById('step3').style.display = 'none';
+    setActiveStep(2);
+});
