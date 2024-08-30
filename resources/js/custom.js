@@ -83,6 +83,11 @@ $(function () {
     $('.booking-btn').on('click', function (e) {
         e.preventDefault();
 
+        // Hide Step 1
+        document.getElementById('step1').style.display = 'none';
+        // Show Step 2
+        document.getElementById('step2').style.display = 'block';
+        setActiveStep(2);
         // Get the parent .filter-block of the clicked button
         var parentBlock = $(this).closest('.filter-block');
 
@@ -137,6 +142,12 @@ $(function () {
     // Handle click event on Book Now button inside class listings
     $(document).on('click', '.book-now', function (e) {
         e.preventDefault();
+
+         // Hide Step 1
+        document.getElementById('step2').style.display = 'none';
+        // Show Step 2
+        document.getElementById('step3').style.display = 'block';
+        setActiveStep(3);
         var slotId = $(this).data('class-id');
         $.ajax({
             url: '/get-class-by-slot/' + slotId,
@@ -250,7 +261,7 @@ $(function () {
 
 // End Date Calculation
 
-$(function () {
+
     function calculateEndDate() {
         let numberofSessions = parseInt($('#noofsessions').val()) || 0;
         let frequency = $('input[name="frequency"]:checked').val();
@@ -261,6 +272,7 @@ $(function () {
         if (startDate && numberofSessions > 0 && frequency) { 
             let start = new Date(startDate);
             let endDate;
+            let scheduledates = []; // Array to store all dates between start and end
              switch (frequency) {
                 case 'weekly':
                     endDate = new Date(start.setDate(start.getDate() + (7 * (numberofSessions - 1))));
@@ -277,7 +289,22 @@ $(function () {
 
             // Display the formatted end date
             $('#endDate').val(formattedEndDate);
+
+            // Generate all dates between start date and end date
+            // debugger;
+            let currentDate = new Date(startDate);
+            while(currentDate <= endDate){
+                scheduledates.push(formatDate(currentDate));
+                currentDate.setDate(currentDate.getDate() + (frequency === 'weekly' ? 7 : 14));
+            }
+            console.log('All dates between start and end:', scheduledates);
+
+
+            // You can also display these dates in a div or use them as needed
+            //$('#scheduleOutput').html(scheduledates.map(date=>`<p>${date}</p>`).join(''));
+            return scheduledates;
         }
+        return [];
     }
 
     // Trigger calculation when the number of sessions changes or when any frequency option is changed
@@ -287,8 +314,14 @@ $(function () {
 
     // Initial calculation on page load
     calculateEndDate();
-});
 
+// Function to format date as DD/MM/YYYY
+function formatDate(date) {
+    var day = String(date.getDate()).padStart(2, '0');
+    var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+    var year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
 
 //Payment form submission js
 
@@ -302,6 +335,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
+
+         // Hide Step 1
+        document.getElementById('step3').style.display = 'none';
+        // Show Step 2
+        document.getElementById('step4').style.display = 'block';
+        setActiveStep(4);
+        const scheduledates = calculateEndDate();
 
         // Collect booking details
         const classId = document.getElementById('classId').value;
@@ -354,6 +394,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 totalAmount : totalAmount,
                 totalDiscount : totalDiscount,
                 finalAmount : finalAmount,
+                scheduledates : scheduledates
             })
         }).then((r) => r.json());
 
@@ -376,7 +417,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             // The payment succeeded
             if (paymentIntent.status === 'succeeded') {
                 // Store the booking data in the database along with the transaction ID
-                  await fetch('/store-booking', {
+                const bookingData = await fetch('/store-booking', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -402,10 +443,24 @@ document.addEventListener('DOMContentLoaded', async function () {
                     totalAmount : totalAmount,
                     totalDiscount : totalDiscount,
                     finalAmount : finalAmount,
+                    scheduledates : scheduledates,
                     transactionId: paymentIntent.id // Transaction ID
                 })
             });
-                window.location.href = '/payment-success';
+                // window.location.href = '/payment-success';
+                // Clear form data and reset input fields after successful payment
+                form.reset();
+                $('#card-element').empty(); // Clear card details
+                $('#endDate').val('');
+                $('#scheduleOutput').empty();
+                // Display booking details on the same page
+                document.getElementById('bookingDetails').innerHTML = `
+                    <p>Day: ${days}</p>
+                    <p>Time Slot: ${startTime} - ${endTime}</p>
+                    <p>No.Of Sessions: ${noOfSession}</p>
+                    <p>Final Amount: ${finalAmount}</p>
+                `;
+                $('#scheduleOutput').html(scheduledates.map(date=>`<p>${date} - ${days}</p>`).join(''));
             } else {
                 window.location.href = '/payment-failure';
             }
@@ -413,5 +468,24 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 });
 
+// Booking step wizard js
 
+function setActiveStep(step) {
+    // debugger;
+    // Remove the active class from all steps
+    document.querySelectorAll('.step').forEach(function(stepElem) {
+        stepElem.classList.remove('active');
+    });
+
+    // Add the active class to the current step
+    document.getElementById('step-' + step).classList.add('active');
+}
+
+// Call setActiveStep with the corresponding step number when moving to the next step
+// Example for step 1
+setActiveStep(1);
+
+// Example when you move to step 2
+// setActiveStep(2);
+// And so on for other steps
 
