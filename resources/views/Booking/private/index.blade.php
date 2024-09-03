@@ -83,14 +83,16 @@
 
                             @if (isset($groupedData[$allDay->teacherId]))
                                 @foreach ($groupedData[$allDay->teacherId] as $levelId => $styles)
-                                    <p class="filter-content" data-level="{{ $levelId }}" data-styles="{{ implode(', ', $styles) }}">
+                                    <p class="filter-content" data-level="{{ $levelId }}"
+                                        data-styles="{{ implode(', ', $styles) }}">
                                         {{ $danceLevelNames[$levelId] ?? 'Unknown Level' }} - {{ implode(', ', $styles) }}
                                     </p>
                                 @endforeach
                             @else
                                 <p>No dance styles available</p>
                             @endif
-                            <a href="#" class="btn btn-primary booking-btn" data-bookingbtn-id="{{ $allDay->teacherId }}">Make a
+                            <a href="#" class="btn btn-primary booking-btn"
+                                data-bookingbtn-id="{{ $allDay->teacherId }}">Make a
                                 Booking</a>
                         </div>
                     @endforeach
@@ -176,7 +178,8 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="col-form-label pt-0" for="">No. of Sessions ($10 per session)</label>
+                                        <label class="col-form-label pt-0" for="">No. of Sessions ($10 per
+                                            session)</label>
                                         <input class="form-control" type="text" name="noofsessions" id="noofsessions"
                                             placeholder="Enter Number of Sessions" required="">
                                         <!-- Popup Structure -->
@@ -216,7 +219,8 @@
                                     <input type="hidden" name="total_amount" id="totalAmountInput" value="0.00">
                                     <input type="hidden" name="studentName" id="studentName" value="{{$user->name}}">
                                     <input type="hidden" name="studentEmail" id="studentEmail" value="{{$user->email}}">
-                                    <input type="hidden" name="studentPhone" id="studentPhone" value="{{$user->contact}}">
+                                    <input type="hidden" name="studentPhone" id="studentPhone"
+                                        value="{{$user->contact}}">
                                     <input type="hidden" name="studentId" id="studentId" value="{{$user->id}}">
                                     <input type="hidden" class="form-control" id="endDate" value="">
                                     <script>
@@ -231,7 +235,7 @@
                                     <div id="card-errors" role="alert"></div>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-primary backbtn2" >Back</a>
+                            <a href="#" class="btn btn-primary backbtn2">Back</a>
                             <button id="submit-button" type="submit" class="btn btn-primary">Submit Booking</button>
                         </div>
                     </div>

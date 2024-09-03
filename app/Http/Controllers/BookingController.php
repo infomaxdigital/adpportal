@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookingModel;
 use App\Models\MydanceStyle;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -27,13 +28,13 @@ class BookingController extends Controller
             ->where('classType', 'private')
             ->get();
 
-            $membershipDiscountAmount = $user->membership ? $user->membership->membershipDiscountAmount : 'No Membership';
-            // $user = User::find(14);
-            // $membership = $user->membership;
-            
-            // dd($membership);
+        $membershipDiscountAmount = $user->membership ? $user->membership->membershipDiscountAmount : 'No Membership';
+        // $user = User::find(14);
+        // $membership = $user->membership;
 
-            //echo $membershipName; exit;
+        // dd($membership);
+
+        //echo $membershipName; exit;
 
         $teacherIds = $allDays->pluck('teacherId')->toArray(); // Convert collection to array
         // Fetch all records from the mydancestyle table
@@ -82,15 +83,21 @@ class BookingController extends Controller
 
         $stripePublishableKey = config('stripe.stripe_pk');
         //echo $stripePublishableKey; exit;
-        return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDays', 'groupedData', 'danceLevelNames','allDiscount','membershipDiscountAmount','stripePublishableKey'));
+        return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDays', 'groupedData', 'danceLevelNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey'));
     }
     public function getClassesByTeacher($teacherId)
     {
         // Fetch classes based on the teacher ID
         $classes = ClassModel::where('teacherId', $teacherId)->get();
 
+        // Fetch booked class IDs
+        $bookedClassIds = BookingModel::where('teacherId', $teacherId)->pluck('classId')->toArray();
+
         // Return the data as JSON
-        return response()->json($classes);
+        return response()->json([
+            'classes' => $classes,
+            'bookedClassIds' => $bookedClassIds
+        ]);
     }
 
     public function getClassesBySlot($slotId)

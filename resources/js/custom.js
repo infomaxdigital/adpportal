@@ -109,9 +109,10 @@ $(function () {
             method: 'GET',
             success: function (response) {
                 var groupedData = {};
+                var bookedClassIds = response.bookedClassIds;
 
                 // Group classes by day
-                $.each(response, function (index, classInfo) {
+                $.each(response.classes, function (index, classInfo) {
                     if (!groupedData[classInfo.days]) {
                         groupedData[classInfo.days] = [];
                     }
@@ -123,8 +124,12 @@ $(function () {
                 $.each(groupedData, function (day, classes) {
                     classData += '<strong>Days:</strong> ' + day + '<br>';
                     $.each(classes, function (index, classInfo) {
+                        var isBooked = bookedClassIds.includes(classInfo.id);
+                        var buttonClass = isBooked ? 'btn-secondary' : 'btn-primary';
+                        var buttonText = isBooked ? 'Already Booked' : 'Book Now';
+                        var buttonDisabled = isBooked ? 'disabled' : '';
                         classData += '<div class="my-3"><strong>Time Slot:</strong> ' + classInfo.startTime + '-' + classInfo.endTime +
-                            ' <a href="#" class="btn btn-primary book-now" data-class-id="' + classInfo.id + '" data-teacher-id="' + classInfo.teacherId + '">Book Now</a></div>';
+                            '<a href="#" class="btn ' + buttonClass + ' book-now" data-class-id="' + classInfo.id + '" data-teacher-id="' + classInfo.teacherId + '" ' + buttonDisabled + '>' + buttonText + '</a></div>';
                     });
                     //classData += '<hr>'; // Optional separator for each day
                 });
@@ -143,7 +148,7 @@ $(function () {
     $(document).on('click', '.book-now', function (e) {
         e.preventDefault();
 
-         // Hide Step 2
+        // Hide Step 2
         document.getElementById('step2').style.display = 'none';
         // Show Step 3
         document.getElementById('step3').style.display = 'block';
@@ -154,7 +159,7 @@ $(function () {
             method: 'GET',
             success: function (response) {
                 $.each(response, function (index, classInfo) {
-                    var fields = ['teacherName', 'days', 'startTime', 'endTime','teacherId'];
+                    var fields = ['teacherName', 'days', 'startTime', 'endTime', 'teacherId'];
                     fields.forEach(function (field) {
                         $('#' + field).val(classInfo[field]);
                         $('.' + field).html(classInfo[field]);
@@ -262,58 +267,58 @@ $(function () {
 // End Date Calculation
 
 
-    function calculateEndDate() {
-        let numberofSessions = parseInt($('#noofsessions').val()) || 0;
-        let frequency = $('input[name="frequency"]:checked').val();
-        let startDate = $('#startDate').val();
-        console.log(numberofSessions + ' ' + frequency + ' ' + startDate);
-        
-        // Add your logic here to calculate the end date based on the number of sessions and frequency
-        if (startDate && numberofSessions > 0 && frequency) { 
-            let start = new Date(startDate);
-            let endDate;
-            let scheduledates = []; // Array to store all dates between start and end
-             switch (frequency) {
-                case 'weekly':
-                    endDate = new Date(start.setDate(start.getDate() + (7 * (numberofSessions - 1))));
-                    break;
-                case 'fortnightly':
-                    endDate = new Date(start.setDate(start.getDate() + (14 * (numberofSessions - 1))));
-                    break;
-                default:
-                    return;
-            }
+function calculateEndDate() {
+    let numberofSessions = parseInt($('#noofsessions').val()) || 0;
+    let frequency = $('input[name="frequency"]:checked').val();
+    let startDate = $('#startDate').val();
+    console.log(numberofSessions + ' ' + frequency + ' ' + startDate);
 
-            // Format the end date as YYYY-MM-DD
-            let formattedEndDate = endDate.toISOString().split('T')[0];
-
-            // Display the formatted end date
-            $('#endDate').val(formattedEndDate);
-
-            // Generate all dates between start date and end date
-            // debugger;
-            let currentDate = new Date(startDate);
-            while(currentDate <= endDate){
-                scheduledates.push(formatDate(currentDate));
-                currentDate.setDate(currentDate.getDate() + (frequency === 'weekly' ? 7 : 14));
-            }
-            console.log('All dates between start and end:', scheduledates);
-
-
-            // You can also display these dates in a div or use them as needed
-            //$('#scheduleOutput').html(scheduledates.map(date=>`<p>${date}</p>`).join(''));
-            return scheduledates;
+    // Add your logic here to calculate the end date based on the number of sessions and frequency
+    if (startDate && numberofSessions > 0 && frequency) {
+        let start = new Date(startDate);
+        let endDate;
+        let scheduledates = []; // Array to store all dates between start and end
+        switch (frequency) {
+            case 'weekly':
+                endDate = new Date(start.setDate(start.getDate() + (7 * (numberofSessions - 1))));
+                break;
+            case 'fortnightly':
+                endDate = new Date(start.setDate(start.getDate() + (14 * (numberofSessions - 1))));
+                break;
+            default:
+                return;
         }
-        return [];
+
+        // Format the end date as YYYY-MM-DD
+        let formattedEndDate = endDate.toISOString().split('T')[0];
+
+        // Display the formatted end date
+        $('#endDate').val(formattedEndDate);
+
+        // Generate all dates between start date and end date
+        // debugger;
+        let currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+            scheduledates.push(formatDate(currentDate));
+            currentDate.setDate(currentDate.getDate() + (frequency === 'weekly' ? 7 : 14));
+        }
+        console.log('All dates between start and end:', scheduledates);
+
+
+        // You can also display these dates in a div or use them as needed
+        //$('#scheduleOutput').html(scheduledates.map(date=>`<p>${date}</p>`).join(''));
+        return scheduledates;
     }
+    return [];
+}
 
-    // Trigger calculation when the number of sessions changes or when any frequency option is changed
-    $('#noofsessions, input[name="frequency"], #startDate').on('input change', function () {
-        calculateEndDate();
-    });
-
-    // Initial calculation on page load
+// Trigger calculation when the number of sessions changes or when any frequency option is changed
+$('#noofsessions, input[name="frequency"], #startDate').on('input change', function () {
     calculateEndDate();
+});
+
+// Initial calculation on page load
+calculateEndDate();
 
 // Function to format date as DD/MM/YYYY
 function formatDate(date) {
@@ -336,7 +341,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-         // Hide Step 3
+        // Hide Step 3
         document.getElementById('step3').style.display = 'none';
         // Show Step 4
         document.getElementById('step4').style.display = 'block';
@@ -375,26 +380,26 @@ document.addEventListener('DOMContentLoaded', async function () {
             },
             body: JSON.stringify({
                 // Add any additional data you want to send to the server
-                classId : classId,
-                studentId : studentId,
-                studentName : studentName,
-                studentEmail : studentEmail,
+                classId: classId,
+                studentId: studentId,
+                studentName: studentName,
+                studentEmail: studentEmail,
                 studentPhone: studentPhone,
-                teacherId : teacherId,
-                teacherName : teacherName,
-                startDate : startDate,
-                endDate : endDate,
-                startTime : startTime,
-                endTime : endTime,
-                days : days,
-                noOfStudent : noOfStudent,
-                partnername : partnername,
-                frequency : frequency,
-                noOfSession : noOfSession,
-                totalAmount : totalAmount,
-                totalDiscount : totalDiscount,
-                finalAmount : finalAmount,
-                scheduledates : scheduledates
+                teacherId: teacherId,
+                teacherName: teacherName,
+                startDate: startDate,
+                endDate: endDate,
+                startTime: startTime,
+                endTime: endTime,
+                days: days,
+                noOfStudent: noOfStudent,
+                partnername: partnername,
+                frequency: frequency,
+                noOfSession: noOfSession,
+                totalAmount: totalAmount,
+                totalDiscount: totalDiscount,
+                finalAmount: finalAmount,
+                scheduledates: scheduledates
             })
         }).then((r) => r.json());
 
@@ -418,35 +423,35 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (paymentIntent.status === 'succeeded') {
                 // Store the booking data in the database along with the transaction ID
                 const bookingData = await fetch('/store-booking', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    classId : classId,
-                    studentId : studentId,
-                    studentName : studentName,
-                    studentEmail : studentEmail,
-                    studentPhone: studentPhone,
-                    teacherId : teacherId,
-                    teacherName : teacherName,
-                    startDate : startDate,
-                    endDate : endDate,
-                    startTime : startTime,
-                    endTime : endTime,
-                    days : days,
-                    noOfStudent : noOfStudent,
-                    partnername: partnername,
-                    frequency : frequency,
-                    noOfSession : noOfSession,
-                    totalAmount : totalAmount,
-                    totalDiscount : totalDiscount,
-                    finalAmount : finalAmount,
-                    scheduledates : scheduledates,
-                    transactionId: paymentIntent.id // Transaction ID
-                })
-            });
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        classId: classId,
+                        studentId: studentId,
+                        studentName: studentName,
+                        studentEmail: studentEmail,
+                        studentPhone: studentPhone,
+                        teacherId: teacherId,
+                        teacherName: teacherName,
+                        startDate: startDate,
+                        endDate: endDate,
+                        startTime: startTime,
+                        endTime: endTime,
+                        days: days,
+                        noOfStudent: noOfStudent,
+                        partnername: partnername,
+                        frequency: frequency,
+                        noOfSession: noOfSession,
+                        totalAmount: totalAmount,
+                        totalDiscount: totalDiscount,
+                        finalAmount: finalAmount,
+                        scheduledates: scheduledates,
+                        transactionId: paymentIntent.id // Transaction ID
+                    })
+                });
                 // window.location.href = '/payment-success';
                 // Clear form data and reset input fields after successful payment
                 form.reset();
@@ -460,7 +465,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <p>No.Of Sessions: ${noOfSession}</p>
                     <p>Final Amount: ${finalAmount}</p>
                 `;
-                $('#scheduleOutput').html(scheduledates.map(date=>`<p>${date} - ${days}</p>`).join(''));
+                $('#scheduleOutput').html(scheduledates.map(date => `<p>${date} - ${days}</p>`).join(''));
             } else {
                 window.location.href = '/payment-failure';
             }
@@ -473,7 +478,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 function setActiveStep(step) {
     // debugger;
     // Remove the active class from all steps
-    document.querySelectorAll('.step').forEach(function(stepElem) {
+    document.querySelectorAll('.step').forEach(function (stepElem) {
         stepElem.classList.remove('active');
     });
 
@@ -483,7 +488,7 @@ function setActiveStep(step) {
 setActiveStep(1);
 
 
-$(document).on('click', '.backbtn1', function(e){
+$(document).on('click', '.backbtn1', function (e) {
     e.preventDefault();
     // Show Step 1
     document.getElementById('step1').style.display = 'block';
@@ -492,7 +497,7 @@ $(document).on('click', '.backbtn1', function(e){
     setActiveStep(1);
 });
 
-$(document).on('click', '.backbtn2', function(e){
+$(document).on('click', '.backbtn2', function (e) {
     e.preventDefault();
     // Show Step 2
     document.getElementById('step2').style.display = 'block';
@@ -500,3 +505,4 @@ $(document).on('click', '.backbtn2', function(e){
     document.getElementById('step3').style.display = 'none';
     setActiveStep(2);
 });
+

@@ -1,4 +1,5 @@
 import './bootstrap';
+import '../css/custom.css';
 import './custom';
 import $ from 'jquery'; // Import jQuery
 
