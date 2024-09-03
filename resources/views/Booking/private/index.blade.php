@@ -254,6 +254,7 @@
             <div class="col-md-6">
                 <h2>Schedule</h2>
                 <div id="scheduleOutput"></div>
+                <a href="#" class="btn btn-primary">Back to Current Booking</a>
             </div>
         </div>
     </div>

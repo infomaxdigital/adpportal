@@ -109,7 +109,9 @@ $(function () {
             method: 'GET',
             success: function (response) {
                 var groupedData = {};
-                var bookedClassIds = response.bookedClassIds;
+                var bookedClasses = response.bookedClasses;
+
+                // console.log(bookedClasses);
 
                 // Group classes by day
                 $.each(response.classes, function (index, classInfo) {
@@ -124,12 +126,34 @@ $(function () {
                 $.each(groupedData, function (day, classes) {
                     classData += '<strong>Days:</strong> ' + day + '<br>';
                     $.each(classes, function (index, classInfo) {
-                        var isBooked = bookedClassIds.includes(classInfo.id);
-                        var buttonClass = isBooked ? 'btn-secondary' : 'btn-primary';
-                        var buttonText = isBooked ? 'Already Booked' : 'Book Now';
-                        var buttonDisabled = isBooked ? 'disabled' : '';
+
+                        var bookingInfo = bookedClasses.find(function(bookedClass) {
+                            return bookedClass.classId === classInfo.id;
+                        });
+
+                        // console.log(bookingInfo);
+
+                         var isBooked = bookingInfo !== undefined;
+                var buttonClass = 'btn-primary';
+                var buttonText = 'Book Now';
+                var buttonDisabled = '';
+
+                if (isBooked) {
+                    // debugger;
+                    var endDate = new Date(bookingInfo.endDate);
+                    var currentDate = new Date();
+                    var diffTime = currentDate - endDate;
+                    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                    // Disable the button if the current date is within 10 days after the endDate
+                    if (diffDays <= 10) {
+                        buttonClass = 'btn-secondary';
+                        buttonText = 'Unavailable';
+                        buttonDisabled = 'disabled-link';
+                    }
+                }
                         classData += '<div class="my-3"><strong>Time Slot:</strong> ' + classInfo.startTime + '-' + classInfo.endTime +
-                            '<a href="#" class="btn ' + buttonClass + ' book-now" data-class-id="' + classInfo.id + '" data-teacher-id="' + classInfo.teacherId + '" ' + buttonDisabled + '>' + buttonText + '</a></div>';
+                            '<a href="#" class="btn ' + buttonClass + ' ' +buttonDisabled+ ' book-now" data-class-id="' + classInfo.id + '" data-teacher-id="' + classInfo.teacherId + '">' + buttonText + '</a></div>';
                     });
                     //classData += '<hr>'; // Optional separator for each day
                 });

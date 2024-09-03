@@ -14,7 +14,7 @@ use App\Models\masterdiscounts;
 
 class BookingController extends Controller
 {
-    public function bookPrivateClass()
+    public function bookPrivateClass($classType)
     {
         $user = Auth::user();
         $availDanceStyle = explode(",", $user->dancestyle);
@@ -25,7 +25,7 @@ class BookingController extends Controller
         $allDays = ClassModel::join('users', 'classes.teacherId', '=', 'users.id')
             ->groupBy('teacherId', 'users.name')
             ->selectRaw('teacherId,users.name as teacherName, GROUP_CONCAT(DISTINCT days ORDER BY FIELD(days, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) as days')
-            ->where('classType', 'private')
+            ->where('classType', $classType)
             ->get();
 
         $membershipDiscountAmount = $user->membership ? $user->membership->membershipDiscountAmount : 'No Membership';
@@ -83,7 +83,7 @@ class BookingController extends Controller
 
         $stripePublishableKey = config('stripe.stripe_pk');
         //echo $stripePublishableKey; exit;
-        return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDays', 'groupedData', 'danceLevelNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey'));
+        return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDays', 'groupedData', 'danceLevelNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey','classType'));
     }
     public function getClassesByTeacher($teacherId)
     {
@@ -91,12 +91,20 @@ class BookingController extends Controller
         $classes = ClassModel::where('teacherId', $teacherId)->get();
 
         // Fetch booked class IDs
-        $bookedClassIds = BookingModel::where('teacherId', $teacherId)->pluck('classId')->toArray();
+        $bookings = BookingModel::get(['classId','endDate']);
+
+        $bookedClasses = [];
+        foreach ($bookings as $booking) {
+            $bookedClasses[] = [
+                'classId' => $booking->classId,
+            'endDate' => $booking->endDate,
+            ];
+        }
 
         // Return the data as JSON
         return response()->json([
             'classes' => $classes,
-            'bookedClassIds' => $bookedClassIds
+            'bookedClasses' => $bookedClasses
         ]);
     }
 
