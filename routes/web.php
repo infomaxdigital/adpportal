@@ -122,8 +122,8 @@ Route::post('my-profile-store/{id}',[ProfileController::class,'store'])->name('m
 
 
 // Booking Urls
-Route::get('book-private-class',[BookingController::class,'bookPrivateClass'])->name('book-private-class')->defaults('classType', 'private');;
-Route::get('book-group-class',[BookingController::class,'bookPrivateClass'])->name('book-group-class')->defaults('classType', 'group');;
+Route::get('book-private-class',[BookingController::class,'bookPrivateClass'])->name('book-private-class')->defaults('classType', 'private');
+Route::get('book-group-class',[BookingController::class,'bookPrivateClass'])->name('book-group-class')->defaults('classType', 'group');
 Route::get('/get-classes/{teacherId}', [BookingController::class, 'getClassesByTeacher']);
 Route::get('/get-class-by-slot/{slotId}', [BookingController::class, 'getClassesBySlot']);
 

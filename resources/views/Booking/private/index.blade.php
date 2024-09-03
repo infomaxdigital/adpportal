@@ -10,10 +10,23 @@
         </div>
     </div>
 </div>
+@if($classType == 'private')
+    <h2>Private Classes</h2>
+   
+@endif
+
+@if($classType == 'group')
+    <h2>Group Classes</h2>
+  
+@endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @if($classType == 'private')
             Book a private class
+            @elseif($classType == 'group')
+            Book a Group class
+            @endif
         </div>
     </div>
 </div>
@@ -39,8 +52,8 @@
 </div>
 
 <div class="container">
-    <h1>Book a Private Class</h1>
     <!-- Step 1 start -->
+     @if($classType == 'private')
     <div class="wizard-step" id="step1">
         <div class="row justify-content-center">
             <div class="col-md-4">
@@ -100,6 +113,7 @@
             </div>
         </div>
     </div>
+    @endif
     <!-- Step 1 end -->
     <!-- Step 2 start -->
     <div class="wizard-step" id="step2" style="display:none;">

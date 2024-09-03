@@ -87,8 +87,11 @@ class BookingController extends Controller
     }
     public function getClassesByTeacher($teacherId)
     {
+        // Retrieve the class type from the route defaults
         // Fetch classes based on the teacher ID
-        $classes = ClassModel::where('teacherId', $teacherId)->get();
+        $classes = ClassModel::where('teacherId', $teacherId)
+                        ->where('classType','private')
+                        ->get();
 
         // Fetch booked class IDs
         $bookings = BookingModel::get(['classId','endDate']);
