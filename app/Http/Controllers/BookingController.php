@@ -22,10 +22,16 @@ class BookingController extends Controller
         $allDanceStyle = masterdancestyle::all();
         $allDanceLevel = masterdancelevel::all();
         $allDiscount = masterdiscounts::all();
-        $allDays = ClassModel::join('users', 'classes.teacherId', '=', 'users.id')
+        $allDaysPrivate = ClassModel::join('users', 'classes.teacherId', '=', 'users.id')
             ->groupBy('teacherId', 'users.name')
             ->selectRaw('teacherId,users.name as teacherName, GROUP_CONCAT(DISTINCT days ORDER BY FIELD(days, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) as days')
             ->where('classType', $classType)
+            ->get();
+
+        $allDaysGroup = ClassModel::join('users', 'classes.teacherId', '=', 'users.id')
+            ->select('classes.*', 'users.name as teacherName')
+            ->where('classType', $classType)
+            ->orderByRaw('FIELD(days, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")')
             ->get();
 
         $membershipDiscountAmount = $user->membership ? $user->membership->membershipDiscountAmount : 'No Membership';
@@ -36,7 +42,7 @@ class BookingController extends Controller
 
         //echo $membershipName; exit;
 
-        $teacherIds = $allDays->pluck('teacherId')->toArray(); // Convert collection to array
+        $teacherIds = $allDaysPrivate->pluck('teacherId')->toArray(); // Convert collection to array
         // Fetch all records from the mydancestyle table
         $danceStyles = MyDanceStyle::all();
 
@@ -44,6 +50,7 @@ class BookingController extends Controller
         $danceStyleNames = MasterDanceStyle::pluck('dancestyleName', 'dancestyleId')->toArray();
         $danceLevelNames = MasterDanceLevel::pluck('dancelevelName', 'dancelevelId')->toArray();
 
+        //print_r($danceStyleNames); exit;
         // Initialize an array to hold the grouped data
         $groupedData = [];
 
@@ -83,24 +90,43 @@ class BookingController extends Controller
 
         $stripePublishableKey = config('stripe.stripe_pk');
         //echo $stripePublishableKey; exit;
-        return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDays', 'groupedData', 'danceLevelNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey','classType'));
+
+        // group class dancestyle logic
+        foreach ($allDaysGroup as $alldaygroupStyle) {
+            $groupStyleIds = json_decode($alldaygroupStyle->danceStyle, true);
+            // Map the IDs to their corresponding names
+            if (is_array($groupStyleIds)) {
+                $alldaygroupStyle->danceStyleNames = array_map(function ($id) use ($danceStyleNames) {
+                    return $danceStyleNames[$id] ?? 'Unknown Style';
+                }, $groupStyleIds);
+            }
+        }
+
+        if ($classType === 'private') {
+            return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDaysPrivate', 'allDaysGroup', 'groupedData', 'danceLevelNames', 'danceStyleNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey', 'classType'));
+            //return view('private_classes_view', compact('availDanceStyle', 'availDanceLevel', 'allDanceStyle', 'allDanceLevel', 'allDiscount', 'allDaysPrivate'));
+        }
+        if ($classType === 'group') {
+            return view('Booking.group.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDaysPrivate', 'allDaysGroup', 'groupedData', 'danceLevelNames', 'danceStyleNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey', 'classType'));
+        }
+
     }
     public function getClassesByTeacher($teacherId)
     {
         // Retrieve the class type from the route defaults
         // Fetch classes based on the teacher ID
         $classes = ClassModel::where('teacherId', $teacherId)
-                        ->where('classType','private')
-                        ->get();
+            ->where('classType', 'private')
+            ->get();
 
         // Fetch booked class IDs
-        $bookings = BookingModel::get(['classId','endDate']);
+        $bookings = BookingModel::get(['classId', 'endDate']);
 
         $bookedClasses = [];
         foreach ($bookings as $booking) {
             $bookedClasses[] = [
                 'classId' => $booking->classId,
-            'endDate' => $booking->endDate,
+                'endDate' => $booking->endDate,
             ];
         }
 

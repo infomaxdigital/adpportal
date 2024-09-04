@@ -87,7 +87,7 @@ $(function () {
         document.getElementById('step1').style.display = 'none';
         // Show Step 2
         document.getElementById('step2').style.display = 'block';
-        setActiveStep(2);
+        // setActiveStep(2);
         // Get the parent .filter-block of the clicked button
         var parentBlock = $(this).closest('.filter-block');
 
@@ -127,33 +127,34 @@ $(function () {
                     classData += '<strong>Days:</strong> ' + day + '<br>';
                     $.each(classes, function (index, classInfo) {
 
-                        var bookingInfo = bookedClasses.find(function(bookedClass) {
+                        var bookingInfo = bookedClasses.find(function (bookedClass) {
                             return bookedClass.classId === classInfo.id;
                         });
 
                         // console.log(bookingInfo);
 
-                         var isBooked = bookingInfo !== undefined;
-                var buttonClass = 'btn-primary';
-                var buttonText = 'Book Now';
-                var buttonDisabled = '';
+                        var isBooked = bookingInfo !== undefined;
+                        var buttonClass = 'btn-primary';
+                        var buttonText = 'Book Now';
+                        var buttonDisabled = '';
 
-                if (isBooked) {
-                    // debugger;
-                    var endDate = new Date(bookingInfo.endDate);
-                    var currentDate = new Date();
-                    var diffTime = currentDate - endDate;
-                    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        if (isBooked) {
+                            // debugger;
+                            var endDate = new Date(bookingInfo.endDate);
+                            var currentDate = new Date();
+                            var diffTime = currentDate - endDate;
+                            var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-                    // Disable the button if the current date is within 10 days after the endDate
-                    if (diffDays <= 10) {
-                        buttonClass = 'btn-secondary';
-                        buttonText = 'Unavailable';
-                        buttonDisabled = 'disabled-link';
-                    }
-                }
+                            // Disable the button if the current date is within 10 days after the endDate
+                            if (diffDays <= 10) {
+                                buttonClass = 'btn-secondary';
+                                buttonText = 'Unavailable';
+                                buttonDisabled = 'disabled-link';
+                            }
+                        }
+                        $("#classType").val(classInfo.classType);
                         classData += '<div class="my-3"><strong>Time Slot:</strong> ' + classInfo.startTime + '-' + classInfo.endTime +
-                            '<a href="#" class="btn ' + buttonClass + ' ' +buttonDisabled+ ' book-now" data-class-id="' + classInfo.id + '" data-teacher-id="' + classInfo.teacherId + '">' + buttonText + '</a></div>';
+                            '<a href="#" class="btn ' + buttonClass + ' ' + buttonDisabled + ' book-now" data-class-id="' + classInfo.id + '" data-teacher-id="' + classInfo.teacherId + '">' + buttonText + '</a></div>';
                     });
                     //classData += '<hr>'; // Optional separator for each day
                 });
@@ -176,7 +177,7 @@ $(function () {
         document.getElementById('step2').style.display = 'none';
         // Show Step 3
         document.getElementById('step3').style.display = 'block';
-        setActiveStep(3);
+        // setActiveStep(3);
         var slotId = $(this).data('class-id');
         $.ajax({
             url: '/get-class-by-slot/' + slotId,
@@ -293,7 +294,15 @@ $(function () {
 
 function calculateEndDate() {
     let numberofSessions = parseInt($('#noofsessions').val()) || 0;
-    let frequency = $('input[name="frequency"]:checked').val();
+    let frequency;
+    //let frequency = $('input[name="frequency"]:checked').val();
+    if ($('input[name="frequency"]:checked').length > 0) {
+        // For radio buttons
+        frequency = $('input[name="frequency"]:checked').val();
+    } else {
+        // For hidden input (group)
+        frequency = $('#frequency').val();
+    }
     let startDate = $('#startDate').val();
     console.log(numberofSessions + ' ' + frequency + ' ' + startDate);
 
@@ -369,11 +378,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('step3').style.display = 'none';
         // Show Step 4
         document.getElementById('step4').style.display = 'block';
-        setActiveStep(4);
+        // setActiveStep(4);
         const scheduledates = calculateEndDate();
 
         // Collect booking details
         const classId = document.getElementById('classId').value;
+        const classType = document.getElementById('classType').value;
         const studentId = document.getElementById('studentId').value;
         const studentName = document.getElementById('studentName').value;
         const studentEmail = document.getElementById('studentEmail').value;
@@ -385,9 +395,33 @@ document.addEventListener('DOMContentLoaded', async function () {
         const startTime = document.getElementById('startTime').value;
         const endTime = document.getElementById('endTime').value;
         const days = document.getElementById('days').value;
-        const noOfStudent = document.querySelector('input[name="noofstudents"]:checked').value;
-        const partnername = document.getElementById('partnername').value;
-        const frequency = document.querySelector('input[name="frequency"]:checked').value;
+        //const noOfStudent = document.querySelector('input[name="noofstudents"]:checked').value;
+        let noOfStudent;
+        if ($('input[name="noofstudents"]:checked').length > 0) {
+            // For radio buttons
+            noOfStudent = $('input[name="noofstudents"]:checked').val();
+        } else {
+            // For hidden input (group)
+            noOfStudent = $('#noofstudents').val();
+        }
+
+        //const partnername = document.getElementById('partnername').value;
+        let partnername = '';
+
+        const partnernameElement = document.getElementById('partnername');
+        if (partnernameElement) {
+            partnername = partnernameElement.value;
+        }
+        let frequency;
+        //let frequency = $('input[name="frequency"]:checked').val();
+        if ($('input[name="frequency"]:checked').length > 0) {
+            // For radio buttons
+            frequency = $('input[name="frequency"]:checked').val();
+        } else {
+            // For hidden input (group)
+            frequency = $('#frequency').val();
+        }
+        //  const frequency = document.querySelector('input[name="frequency"]:checked').value;
         const noOfSession = document.getElementById('noofsessions').value;
         const totalAmount = document.getElementById('totalAmountInput').value;
         const totalDiscount = document.getElementById('totalDiscountInput').value;
@@ -405,6 +439,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             body: JSON.stringify({
                 // Add any additional data you want to send to the server
                 classId: classId,
+                classType: classType,
                 studentId: studentId,
                 studentName: studentName,
                 studentEmail: studentEmail,
@@ -454,6 +489,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     },
                     body: JSON.stringify({
                         classId: classId,
+                        classType: classType,
                         studentId: studentId,
                         studentName: studentName,
                         studentEmail: studentEmail,
@@ -499,34 +535,34 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 // Booking step wizard js
 
-function setActiveStep(step) {
-    // debugger;
-    // Remove the active class from all steps
-    document.querySelectorAll('.step').forEach(function (stepElem) {
-        stepElem.classList.remove('active');
-    });
+// function setActiveStep(step) {
+//     // debugger;
+//     // Remove the active class from all steps
+//     document.querySelectorAll('.step').forEach(function (stepElem) {
+//         stepElem.classList.remove('active');
+//     });
 
-    // Add the active class to the current step
-    document.getElementById('step-' + step).classList.add('active');
-}
-setActiveStep(1);
+//     // Add the active class to the current step
+//     document.getElementById('step-' + step).classList.add('active');
+// }
+// setActiveStep(1);
 
 
-$(document).on('click', '.backbtn1', function (e) {
-    e.preventDefault();
-    // Show Step 1
-    document.getElementById('step1').style.display = 'block';
-    // Hide Step 2
-    document.getElementById('step2').style.display = 'none';
-    setActiveStep(1);
-});
+// $(document).on('click', '.backbtn1', function (e) {
+//     e.preventDefault();
+//     // Show Step 1
+//     document.getElementById('step1').style.display = 'block';
+//     // Hide Step 2
+//     document.getElementById('step2').style.display = 'none';
+//     setActiveStep(1);
+// });
 
-$(document).on('click', '.backbtn2', function (e) {
-    e.preventDefault();
-    // Show Step 2
-    document.getElementById('step2').style.display = 'block';
-    // Hide Step 3
-    document.getElementById('step3').style.display = 'none';
-    setActiveStep(2);
-});
+// $(document).on('click', '.backbtn2', function (e) {
+//     e.preventDefault();
+//     // Show Step 2
+//     document.getElementById('step2').style.display = 'block';
+//     // Hide Step 3
+//     document.getElementById('step3').style.display = 'none';
+//     setActiveStep(2);
+// });
 

@@ -30,6 +30,7 @@ class PaymentController extends Controller
         // Create a new booking
         \Log::info($request->all());
         $booking = new BookingModel();
+        $booking->classType = $request->classType;
         $booking->classId = $request->classId;
         $booking->studentId = $request->studentId;
         $booking->studentName = $request->studentName;
