@@ -30,10 +30,58 @@ $(function () {
 
         console.log("Selected Dance Style:", selectedDanceStyle);
         console.log("Selected Dance Level:", selectedDanceLevel);
+        // Create an object to store the count of bookings per class
+        var classBookingsCount = {};
+
+        // Count the number of bookings per classId
+        $.each(bookedClasses, function (index, booking) {
+            if (classBookingsCount[booking.classId]) {
+                classBookingsCount[booking.classId]++;
+            } else {
+                classBookingsCount[booking.classId] = 1;
+            }
+        });
 
         $('.filter-block').each(function () {
             var $block = $(this);
             var matchFound = false;
+            var isBooked = false;
+            var endDate = null;
+            var capacity = null;
+            var classId = $block.data('class-id');
+            var currentBookings = classBookingsCount[classId] || 0;
+
+            // Check if the class has been booked
+            $.each(bookedClasses, function (index, booking) {
+                if (booking.classId == classId) {
+                    isBooked = true;
+                    endDate = new Date(booking.endDate);
+                    capacity = booking.capacity; // Get the capacity for the class
+                    return false; // Break out of the loop
+                }
+            });
+
+                 // Hide blocks based on booking status, capacity, and end date
+                 if ((isBooked && endDate) || (capacity && currentBookings >= capacity)) {
+                    if (isBooked && endDate) {
+                        var currentDate = new Date();
+                        var diffTime = currentDate - endDate;
+                        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+                        // Hide the block if the class was booked within the last 10 days
+                        if (diffDays <= 10) {
+                            console.log("Hiding block due to recent booking within 10 days:", classId);
+                            $block.hide();
+                            return; // Skip the rest of the logic for this block
+                        }
+                    }
+                    // Hide the block if capacity is reached
+                    if (capacity && currentBookings >= capacity) {
+                        console.log("Hiding block due to capacity reached:", classId);
+                        $block.hide();
+                        return; // Skip the rest of the logic for this block
+                    }
+                }
 
             $block.find('.filter-content').each(function () {
                 var blockStyles = $(this).data('styles').toLowerCase().split(', ');  // Convert styles to lowercase
@@ -124,7 +172,7 @@ $(function () {
                 var classData = '';
 
                 $.each(groupedData, function (day, classes) {
-                    classData += '<strong>Days:</strong> ' + day + '<br>';
+
                     $.each(classes, function (index, classInfo) {
 
                         var bookingInfo = bookedClasses.find(function (bookedClass) {
@@ -147,11 +195,13 @@ $(function () {
 
                             // Disable the button if the current date is within 10 days after the endDate
                             if (diffDays <= 10) {
-                                buttonClass = 'btn-secondary';
-                                buttonText = 'Unavailable';
-                                buttonDisabled = 'disabled-link';
+                                // buttonClass = 'btn-secondary';
+                                // buttonText = 'Unavailable';
+                                // buttonDisabled = 'disabled-link';
+                                return;
                             }
                         }
+                        classData += '<strong>Days:</strong> ' + day + '<br>';
                         $("#classType").val(classInfo.classType);
                         classData += '<div class="my-3"><strong>Time Slot:</strong> ' + classInfo.startTime + '-' + classInfo.endTime +
                             '<a href="#" class="btn ' + buttonClass + ' ' + buttonDisabled + ' book-now" data-class-id="' + classInfo.id + '" data-teacher-id="' + classInfo.teacherId + '">' + buttonText + '</a></div>';
@@ -218,6 +268,54 @@ $(function () {
         });
     });
 });
+
+$(function () {
+    //    debugger;
+    // Create an object to store the count of bookings per class
+    var classBookingsCount = {};
+
+    // Count the number of bookings per classId
+    $.each(bookedClasses, function (index, booking) {
+        if (classBookingsCount[booking.classId]) {
+            classBookingsCount[booking.classId]++;
+        } else {
+            classBookingsCount[booking.classId] = 1;
+        }
+    });
+    $('.filter-block').each(function () {
+        var classId = $(this).data('class-id');
+        var isBooked = false;
+        var endDate = null;
+        var capacity = null;
+        var currentBookings = classBookingsCount[classId] || 0;
+
+        $.each(bookedClasses, function (index, booking) {
+            if (booking.classId == classId) {
+                isBooked = true;
+                endDate = new Date(booking.endDate);
+                capacity = booking.capacity; // Get the capacity for the class
+                return false; // Break out of the loop
+            }
+        });
+        if ((isBooked && endDate) || (capacity && currentBookings >= capacity)) {
+            if (isBooked && endDate) {
+                var currentDate = new Date();
+                var diffTime = currentDate - endDate;
+                var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                // Hide the block if the class was booked within the last 10 days
+                if (diffDays <= 10) {
+                    $(this).hide();
+                }
+            }
+            // Check if the current number of bookings exceeds the capacity
+            if (capacity && currentBookings >= capacity) {
+                $(this).hide(); // Hide the block if capacity is reached
+            }
+        }
+    });
+});
+
 
 function getNextDateByDay(days) {
     // debugger;

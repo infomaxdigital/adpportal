@@ -77,7 +77,7 @@ class ClassController extends Controller
          }
 
          if ($input['class_type'] == 'group') {
-            $insertclass->capactiy = $input['capacity'];
+            $insertclass->capacity = $input['capacity'];
             $insertclass->danceLevel = $input['dance_level'];
             $insertclass->danceStyle = json_encode($input['dance_styles']);
             // $insertmydance->danceLevel = json_encode($danceLevels);

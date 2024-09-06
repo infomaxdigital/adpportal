@@ -67,7 +67,7 @@
 
                 @foreach ($allDaysGroup as $allDay)
                     <div class="filter-block" data-teacher="{{ $allDay->teacherId }}" data-days="{{ $allDay->days }}"
-                        data-teachername="{{ $allDay->teacherName }}">
+                        data-teachername="{{ $allDay->teacherName }}" data-class-id="{{$allDay->id}}" data-capacity="{{$allDay->capactiy}}">
                         <span>
                             {{$allDay->startTime}} - {{$allDay->endTime}}
                         </span>
@@ -84,7 +84,9 @@
 
                     </div>
                 @endforeach
-
+                <script>
+                    var bookedClasses = @json($bookedClasses);
+                </script>
             </div>
         </div>
     </div>

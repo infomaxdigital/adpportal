@@ -101,13 +101,43 @@ class BookingController extends Controller
                 }, $groupStyleIds);
             }
         }
+        // Get booking info gro group class
+        $bookings = BookingModel::where('classType', 'group')
+            ->get(['classId', 'endDate']);
+
+        // Fetch class capacities
+        $classes = ClassModel::whereIn('id', $bookings->pluck('classId'))
+            ->get(['id', 'capacity']);
+
+        $bookedClasses = [];
+        foreach ($bookings as $booking) {
+            $bookedClasses[] = [
+                'classId' => $booking->classId,
+                'endDate' => $booking->endDate,
+                'capacity' => null, // Initialize capacity
+            ];
+        }
+
+        // Merge capacity data with booking data
+
+        foreach ($classes as $class) {
+            foreach ($bookedClasses as &$bookedClass) {
+                if ($bookedClass['classId'] == $class->id) {
+                    $bookedClass['capacity'] = $class->capacity;
+                }
+            }
+        }
+        //  dd($bookings);
+
+
+        // dd($bookedClasses);
 
         if ($classType === 'private') {
             return view('Booking.private.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDaysPrivate', 'allDaysGroup', 'groupedData', 'danceLevelNames', 'danceStyleNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey', 'classType'));
             //return view('private_classes_view', compact('availDanceStyle', 'availDanceLevel', 'allDanceStyle', 'allDanceLevel', 'allDiscount', 'allDaysPrivate'));
         }
         if ($classType === 'group') {
-            return view('Booking.group.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDaysPrivate', 'allDaysGroup', 'groupedData', 'danceLevelNames', 'danceStyleNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey', 'classType'));
+            return view('Booking.group.index', compact('user', 'allDanceStyle', 'allDanceLevel', 'allDaysPrivate', 'allDaysGroup', 'groupedData', 'danceLevelNames', 'danceStyleNames', 'allDiscount', 'membershipDiscountAmount', 'stripePublishableKey', 'classType', 'bookedClasses'));
         }
 
     }
