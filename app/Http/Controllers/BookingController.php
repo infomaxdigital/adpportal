@@ -23,10 +23,14 @@ class BookingController extends Controller
         $allDanceLevel = masterdancelevel::all();
         $allDiscount = masterdiscounts::all();
         $allDaysPrivate = ClassModel::join('users', 'classes.teacherId', '=', 'users.id')
-            ->groupBy('teacherId', 'users.name')
-            ->selectRaw('teacherId,users.name as teacherName, GROUP_CONCAT(DISTINCT days ORDER BY FIELD(days, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) as days')
+            ->groupBy('teacherId', 'users.name','classType')
+            ->selectRaw('teacherId,users.name as teacherName,
+                GROUP_CONCAT(DISTINCT days ORDER BY FIELD(days, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) as days,
+                classType')
             ->where('classType', $classType)
             ->get();
+
+            // dd($allDaysPrivate);
 
         $allDaysGroup = ClassModel::join('users', 'classes.teacherId', '=', 'users.id')
             ->select('classes.*', 'users.name as teacherName')

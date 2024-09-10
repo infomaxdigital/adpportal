@@ -13,14 +13,14 @@
 <div class="container">
     <!-- Steps Indicator -->
     <div class="steps-indicator">
-        <div class="step" id="step-2">
+        <div class="step" id="step-1">
             <div class="step-number">1</div>
         </div>
         <div class="step" id="step-3">
-            <div class="step-number">3</div>
+            <div class="step-number">2</div>
         </div>
         <div class="step" id="step-4">
-            <div class="step-number">4</div>
+            <div class="step-number">3</div>
         </div>
     </div>
 
@@ -67,7 +67,7 @@
 
                 @foreach ($allDaysGroup as $allDay)
                     <div class="filter-block" data-teacher="{{ $allDay->teacherId }}" data-days="{{ $allDay->days }}"
-                        data-teachername="{{ $allDay->teacherName }}" data-class-id="{{$allDay->id}}" data-capacity="{{$allDay->capactiy}}">
+                        data-teachername="{{ $allDay->teacherName }}" data-class-id="{{$allDay->id}}" data-capacity="{{$allDay->capacity}}" data-class-type="{{$allDay->classType}}">
                         <span>
                             {{$allDay->startTime}} - {{$allDay->endTime}}
                         </span>

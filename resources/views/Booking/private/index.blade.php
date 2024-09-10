@@ -69,7 +69,7 @@
                 <div class="row justify-content-center" id="filterableBlocks">
                     @foreach ($allDaysPrivate as $allDay)
                         <div class="col-md-12 mb-4 filter-block" data-teacher="{{ $allDay->teacherId }}"
-                            data-days="{{ $allDay->days }}" data-teachername="{{ $allDay->teacherName }}">
+                            data-days="{{ $allDay->days }}" data-teachername="{{ $allDay->teacherName }}" data-class-type="{{$allDay->classType}}">
                             <strong>Teacher Name:</strong> {{$allDay->teacherName}}<br>
                             <strong>Days:</strong> {{$allDay->days}}<br>
 

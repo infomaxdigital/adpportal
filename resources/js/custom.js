@@ -30,44 +30,45 @@ $(function () {
 
         console.log("Selected Dance Style:", selectedDanceStyle);
         console.log("Selected Dance Level:", selectedDanceLevel);
-        // Create an object to store the count of bookings per class
-        var classBookingsCount = {};
+        if (typeof bookedClasses !== 'undefined') {
+            // Create an object to store the count of bookings per class
+            var classBookingsCount = {};
 
-        // Count the number of bookings per classId
-        $.each(bookedClasses, function (index, booking) {
-            if (classBookingsCount[booking.classId]) {
-                classBookingsCount[booking.classId]++;
-            } else {
-                classBookingsCount[booking.classId] = 1;
-            }
-        });
-
-        $('.filter-block').each(function () {
-            var $block = $(this);
-            var matchFound = false;
-            var isBooked = false;
-            var endDate = null;
-            var capacity = null;
-            var classId = $block.data('class-id');
-            var currentBookings = classBookingsCount[classId] || 0;
-
-            // Check if the class has been booked
+            // Count the number of bookings per classId
             $.each(bookedClasses, function (index, booking) {
-                if (booking.classId == classId) {
-                    isBooked = true;
-                    endDate = new Date(booking.endDate);
-                    capacity = booking.capacity; // Get the capacity for the class
-                    return false; // Break out of the loop
+                if (classBookingsCount[booking.classId]) {
+                    classBookingsCount[booking.classId]++;
+                } else {
+                    classBookingsCount[booking.classId] = 1;
                 }
             });
 
-                 // Hide blocks based on booking status, capacity, and end date
-                 if ((isBooked && endDate) || (capacity && currentBookings >= capacity)) {
+            $('.filter-block').each(function () {
+                var $block = $(this);
+                var matchFound = false;
+                var isBooked = false;
+                var endDate = null;
+                var capacity = null;
+                var classId = $block.data('class-id');
+                var currentBookings = classBookingsCount[classId] || 0;
+
+                // Check if the class has been booked
+                $.each(bookedClasses, function (index, booking) {
+                    if (booking.classId == classId) {
+                        isBooked = true;
+                        endDate = new Date(booking.endDate);
+                        capacity = booking.capacity; // Get the capacity for the class
+                        return false; // Break out of the loop
+                    }
+                });
+
+                // Hide blocks based on booking status, capacity, and end date
+                if ((isBooked && endDate) || (capacity && currentBookings >= capacity)) {
                     if (isBooked && endDate) {
                         var currentDate = new Date();
                         var diffTime = currentDate - endDate;
                         var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
                         // Hide the block if the class was booked within the last 10 days
                         if (diffDays <= 10) {
                             console.log("Hiding block due to recent booking within 10 days:", classId);
@@ -83,33 +84,66 @@ $(function () {
                     }
                 }
 
-            $block.find('.filter-content').each(function () {
-                var blockStyles = $(this).data('styles').toLowerCase().split(', ');  // Convert styles to lowercase
-                var blockLevel = $(this).data('level').toString();
+                $block.find('.filter-content').each(function () {
+                    var blockStyles = $(this).data('styles').toLowerCase().split(', ');  // Convert styles to lowercase
+                    var blockLevel = $(this).data('level').toString();
 
-                console.log("Block Styles:", blockStyles);
-                console.log("Block Level:", blockLevel);
+                    console.log("Block Styles:", blockStyles);
+                    console.log("Block Level:", blockLevel);
 
-                var matchesStyle = selectedDanceStyle ? blockStyles.includes($('#dance_style option:selected').text().toLowerCase()) : true;
-                var matchesLevel = selectedDanceLevel ? blockLevel === selectedDanceLevel : true;
+                    var matchesStyle = selectedDanceStyle ? blockStyles.includes($('#dance_style option:selected').text().toLowerCase()) : true;
+                    var matchesLevel = selectedDanceLevel ? blockLevel === selectedDanceLevel : true;
 
-                console.log("Matches Style:", matchesStyle);
-                console.log("Matches Level:", matchesLevel);
+                    console.log("Matches Style:", matchesStyle);
+                    console.log("Matches Level:", matchesLevel);
 
-                if (matchesStyle && matchesLevel) {
-                    matchFound = true;
-                    return false; // Exit the loop early if a match is found
+                    if (matchesStyle && matchesLevel) {
+                        matchFound = true;
+                        return false; // Exit the loop early if a match is found
+                    }
+                });
+
+                if (matchFound) {
+                    console.log("Showing block for teacher:", $block.data('teacher'));
+                    $block.show();
+                } else {
+                    console.log("Hiding block for teacher:", $block.data('teacher'));
+                    $block.hide();
                 }
             });
+        } else {
+            $('.filter-block').each(function () {
+                var $block = $(this);
+                var matchFound = false;
 
-            if (matchFound) {
-                console.log("Showing block for teacher:", $block.data('teacher'));
-                $block.show();
-            } else {
-                console.log("Hiding block for teacher:", $block.data('teacher'));
-                $block.hide();
-            }
-        });
+                $block.find('.filter-content').each(function () {
+                    var blockStyles = $(this).data('styles').toLowerCase().split(', ');  // Convert styles to lowercase
+                    var blockLevel = $(this).data('level').toString();
+
+                    console.log("Block Styles:", blockStyles);
+                    console.log("Block Level:", blockLevel);
+
+                    var matchesStyle = selectedDanceStyle ? blockStyles.includes($('#dance_style option:selected').text().toLowerCase()) : true;
+                    var matchesLevel = selectedDanceLevel ? blockLevel === selectedDanceLevel : true;
+
+                    console.log("Matches Style:", matchesStyle);
+                    console.log("Matches Level:", matchesLevel);
+
+                    if (matchesStyle && matchesLevel) {
+                        matchFound = true;
+                        return false; // Exit the loop early if a match is found
+                    }
+                });
+
+                if (matchFound) {
+                    console.log("Showing block for teacher:", $block.data('teacher'));
+                    $block.show();
+                } else {
+                    console.log("Hiding block for teacher:", $block.data('teacher'));
+                    $block.hide();
+                }
+            });
+        }
     }
 
     $('#dance_style, #dance_level').on('change', filterBlocks);
@@ -135,7 +169,7 @@ $(function () {
         document.getElementById('step1').style.display = 'none';
         // Show Step 2
         document.getElementById('step2').style.display = 'block';
-        // setActiveStep(2);
+        setActiveStep(2);
         // Get the parent .filter-block of the clicked button
         var parentBlock = $(this).closest('.filter-block');
 
@@ -227,7 +261,7 @@ $(function () {
         document.getElementById('step2').style.display = 'none';
         // Show Step 3
         document.getElementById('step3').style.display = 'block';
-        // setActiveStep(3);
+        setActiveStep(3);
         var slotId = $(this).data('class-id');
         $.ajax({
             url: '/get-class-by-slot/' + slotId,
@@ -269,52 +303,7 @@ $(function () {
     });
 });
 
-$(function () {
-    //    debugger;
-    // Create an object to store the count of bookings per class
-    var classBookingsCount = {};
 
-    // Count the number of bookings per classId
-    $.each(bookedClasses, function (index, booking) {
-        if (classBookingsCount[booking.classId]) {
-            classBookingsCount[booking.classId]++;
-        } else {
-            classBookingsCount[booking.classId] = 1;
-        }
-    });
-    $('.filter-block').each(function () {
-        var classId = $(this).data('class-id');
-        var isBooked = false;
-        var endDate = null;
-        var capacity = null;
-        var currentBookings = classBookingsCount[classId] || 0;
-
-        $.each(bookedClasses, function (index, booking) {
-            if (booking.classId == classId) {
-                isBooked = true;
-                endDate = new Date(booking.endDate);
-                capacity = booking.capacity; // Get the capacity for the class
-                return false; // Break out of the loop
-            }
-        });
-        if ((isBooked && endDate) || (capacity && currentBookings >= capacity)) {
-            if (isBooked && endDate) {
-                var currentDate = new Date();
-                var diffTime = currentDate - endDate;
-                var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-                // Hide the block if the class was booked within the last 10 days
-                if (diffDays <= 10) {
-                    $(this).hide();
-                }
-            }
-            // Check if the current number of bookings exceeds the capacity
-            if (capacity && currentBookings >= capacity) {
-                $(this).hide(); // Hide the block if capacity is reached
-            }
-        }
-    });
-});
 
 
 function getNextDateByDay(days) {
@@ -476,7 +465,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('step3').style.display = 'none';
         // Show Step 4
         document.getElementById('step4').style.display = 'block';
-        // setActiveStep(4);
+        setActiveStep(4);
         const scheduledates = calculateEndDate();
 
         // Collect booking details
@@ -633,34 +622,34 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 // Booking step wizard js
 
-// function setActiveStep(step) {
-//     // debugger;
-//     // Remove the active class from all steps
-//     document.querySelectorAll('.step').forEach(function (stepElem) {
-//         stepElem.classList.remove('active');
-//     });
+function setActiveStep(step) {
+    // debugger;
+    // Remove the active class from all steps
+    document.querySelectorAll('.step').forEach(function (stepElem) {
+        stepElem.classList.remove('active');
+    });
 
-//     // Add the active class to the current step
-//     document.getElementById('step-' + step).classList.add('active');
-// }
-// setActiveStep(1);
+    // Add the active class to the current step
+    document.getElementById('step-' + step).classList.add('active');
+}
+setActiveStep(1);
 
 
-// $(document).on('click', '.backbtn1', function (e) {
-//     e.preventDefault();
-//     // Show Step 1
-//     document.getElementById('step1').style.display = 'block';
-//     // Hide Step 2
-//     document.getElementById('step2').style.display = 'none';
-//     setActiveStep(1);
-// });
+$(document).on('click', '.backbtn1', function (e) {
+    e.preventDefault();
+    // Show Step 1
+    document.getElementById('step1').style.display = 'block';
+    // Hide Step 2
+    document.getElementById('step2').style.display = 'none';
+    setActiveStep(1);
+});
 
-// $(document).on('click', '.backbtn2', function (e) {
-//     e.preventDefault();
-//     // Show Step 2
-//     document.getElementById('step2').style.display = 'block';
-//     // Hide Step 3
-//     document.getElementById('step3').style.display = 'none';
-//     setActiveStep(2);
-// });
+$(document).on('click', '.backbtn2', function (e) {
+    e.preventDefault();
+    // Show Step 2
+    document.getElementById('step2').style.display = 'block';
+    // Hide Step 3
+    document.getElementById('step3').style.display = 'none';
+    setActiveStep(2);
+});
 
