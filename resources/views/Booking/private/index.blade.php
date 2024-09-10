@@ -69,7 +69,8 @@
                 <div class="row justify-content-center" id="filterableBlocks">
                     @foreach ($allDaysPrivate as $allDay)
                         <div class="col-md-12 mb-4 filter-block" data-teacher="{{ $allDay->teacherId }}"
-                            data-days="{{ $allDay->days }}" data-teachername="{{ $allDay->teacherName }}" data-class-type="{{$allDay->classType}}">
+                            data-days="{{ $allDay->days }}" data-teachername="{{ $allDay->teacherName }}"
+                            data-class-type="{{$allDay->classType}}">
                             <strong>Teacher Name:</strong> {{$allDay->teacherName}}<br>
                             <strong>Days:</strong> {{$allDay->days}}<br>
 
@@ -170,8 +171,10 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="col-form-label pt-0" for="">No. of Sessions ($10 per
+                                        <label class="col-form-label pt-0" for="">No. of Sessions ($<span class="SessionPirce"></span> per
                                             session)</label>
+                                        
+                                        <input type="hidden" class="form-control" id="SessionPirce" value="">
                                         <input class="form-control" type="text" name="noofsessions" id="noofsessions"
                                             placeholder="Enter Number of Sessions" required="">
                                         <!-- Popup Structure -->
@@ -204,7 +207,7 @@
                                     </div>
                                     <div>
                                         <strong>Membership Discount:</strong> <span
-                                            id="membershipDiscount">${{ $membershipDiscountAmount }}</span>
+                                            id="membershipDiscount">{{ $membershipDiscountAmount }}%</span>
                                     </div>
                                     <input type="hidden" name="final_amount" id="finalAmountInput" value="0.00">
                                     <input type="hidden" name="total_discount" id="totalDiscountInput" value="0.00">

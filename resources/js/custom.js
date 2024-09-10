@@ -276,6 +276,10 @@ $(function () {
                     if (classInfo.id) {
                         $('#classId').val(classInfo.id);
                     }
+                    if (classInfo.price) {
+                        $('#SessionPirce').val(classInfo.price);
+                        $('.SessionPirce').html(classInfo.price);
+                    }
                     // Combine start time and end time and display them together
                     if (classInfo.startTime && classInfo.endTime) {
                         $('#timeSlot').html(classInfo.startTime + ' - ' + classInfo.endTime).show();
@@ -344,7 +348,7 @@ $(function () {
 $(function () {
     function calculateFinalAmount() {
         // debugger;
-        var sessionCost = 10;
+        var sessionCost = $('#SessionPirce').val();
         var numberofSessions = parseInt($('#noofsessions').val()) || 0;
         var discount = 0;
         var totalDiscount = 0;
